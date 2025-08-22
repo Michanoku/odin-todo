@@ -30,6 +30,11 @@ const todos = (function () {
     return todo.id;
   };
 
+  function deleteTodo(todoId) {
+    const todoIndex = todoArray.findIndex((todo) => todo.id === todoId);
+    todoArray.splice(todoIndex, 1);
+  }
+
   function getTodo(todoId) {
     return todoArray.find((todo) => todo.id === todoId);
   }
@@ -37,8 +42,10 @@ const todos = (function () {
   function toggleTodo(todoId) {
     const todo = getTodo(todoId);
     todo.checked = !todo.checked;
+    return todo.checked;
   }
 
-  return { createTodo };
+  return { createTodo, deleteTodo, toggleTodo };
 }());
   
+export { todos }
