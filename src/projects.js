@@ -15,6 +15,11 @@ const projects = (function () {
     projectsArray.append(new Project(name));
   };
 
+  function deleteProject(projectId) {
+    const projectIndex = projectsArray.findIndex((project) => project.id === projectId);
+    projectsArray.splice(todoIndex, 1);
+  }
+
   function getAllProjects() {
     return projectsArray;
   };
@@ -33,11 +38,11 @@ const projects = (function () {
     project.todo.append(todo);
   };
 
-  function deleteTodo(projectId, todoId) {
+  function removeTodo(projectId, todoId) {
     const project = projectsArray.find((project) => project.id === projectId);
     const todoIndex = project.todo.findIndex((todo) => todo.id === todoId);
-    project.todo.splice(todoIndex ,1);
+    project.todo.splice(todoIndex, 1);
   };
 
-  return { createProject, getAllProjects, getProject, editProjectName, addTodo, deleteTodo }
+  return { createProject, deleteProject, getAllProjects, getProject, editProjectName, addTodo, removeTodo }
 })();
