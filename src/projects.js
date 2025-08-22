@@ -23,7 +23,10 @@ const projects = (function () {
     return projectsArray.find((project) => project.id === id);
   };
 
+  function editProjectName(id, newName) {
+    const project = projectsArray.find((project) => project.id === id);
+    project.name = newName;
+  }
 
-
-  return { createProject, getAllProjects, getProject }
+  return { createProject, getAllProjects, getProject, editProjectName }
 })();
