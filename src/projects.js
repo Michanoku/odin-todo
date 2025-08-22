@@ -4,8 +4,8 @@ const projects = (function () {
 
   class Project {
     constructor(name) {
-      this.name = name;
       this.id = crypto.randomUUID();
+      this.name = name;
       // All todo objects will go in here
       this.todo = new Array();
     }
@@ -29,20 +29,23 @@ const projects = (function () {
   };
 
   function editProjectName(projectId, newName) {
-    const project = projectsArray.find((project) => project.id === projectId);
+    const project = getProject(projectId);
     project.name = newName;
   };
 
-  function addTodo(projectId, todo) {
-    const project = projectsArray.find((project) => project.id === projectId);
-    project.todo.append(todo);
+
+  // MAY make a separate handler for this and outsource it to a third location, to link projects and
+  // todos through that.
+  function addTodo(projectId, todoId) {
+    const project = getProject(projectId);
+    project.todo.append(todoId);
   };
 
   function removeTodo(projectId, todoId) {
-    const project = projectsArray.find((project) => project.id === projectId);
+    const project = getProject(projectId);
     const todoIndex = project.todo.findIndex((todo) => todo.id === todoId);
     project.todo.splice(todoIndex, 1);
   };
 
-  return { createProject, deleteProject, getAllProjects, getProject, editProjectName, addTodo, removeTodo }
+  return { createProject, deleteProject, getAllProjects, getProject, editProjectName, addTodo, removeTodo };
 })();

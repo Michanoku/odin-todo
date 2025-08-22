@@ -1,6 +1,10 @@
-import { compareAsc, format } from "date-fns";
+import { format } from "date-fns";
 
 const todos = (function () {
+
+  // Create global todo array
+  const todoArray = new Array();
+
   class Todo {
     constructor(
       title='Untitled',
@@ -10,6 +14,7 @@ const todos = (function () {
       notes=new Array(), 
       checklist=new Array(),
     ) {
+      this.id = crypto.randomUUID();
       this.title = title;
       this.description = description;
       this.dueDate = dueDate === null ? null : format(new Date(dateString), "yyyy-MM-dd");
@@ -21,9 +26,19 @@ const todos = (function () {
   }
 
   function createTodo(title, description, dueDate, priority, notes, checklist) {
-    return new Todo(title, description, dueDate, priority, notes, checklist);
+    const todo = new Todo(title, description, dueDate, priority, notes, checklist);
+    return todo.id;
+  };
+
+  function getTodo(todoId) {
+    return todoArray.find((todo) => todo.id === todoId);
   }
 
-  return { createTodo }
+  function toggleTodo(todoId) {
+    const todo = getTodo(todoId);
+    todo.checked = !todo.checked;
+  }
+
+  return { createTodo };
 }());
   
