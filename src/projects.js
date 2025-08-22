@@ -19,14 +19,19 @@ const projects = (function () {
     return projectsArray;
   };
 
-  function getProject(id) {
-    return projectsArray.find((project) => project.id === id);
+  function getProject(projectId) {
+    return projectsArray.find((project) => project.id === projectId);
   };
 
-  function editProjectName(id, newName) {
-    const project = projectsArray.find((project) => project.id === id);
+  function editProjectName(projectId, newName) {
+    const project = projectsArray.find((project) => project.id === projectId);
     project.name = newName;
   }
 
-  return { createProject, getAllProjects, getProject, editProjectName }
+  function addTodo(projectId, todo) {
+    const project = projectsArray.find((project) => project.id === projectId);
+    project.todo.append(todo);
+  }
+
+  return { createProject, getAllProjects, getProject, editProjectName, addTodo }
 })();
