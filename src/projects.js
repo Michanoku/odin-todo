@@ -26,12 +26,18 @@ const projects = (function () {
   function editProjectName(projectId, newName) {
     const project = projectsArray.find((project) => project.id === projectId);
     project.name = newName;
-  }
+  };
 
   function addTodo(projectId, todo) {
     const project = projectsArray.find((project) => project.id === projectId);
     project.todo.append(todo);
-  }
+  };
 
-  return { createProject, getAllProjects, getProject, editProjectName, addTodo }
+  function deleteTodo(projectId, todoId) {
+    const project = projectsArray.find((project) => project.id === projectId);
+    const todoIndex = project.todo.findIndex((todo) => todo.id === todoId);
+    project.todo.splice(todoIndex ,1);
+  };
+
+  return { createProject, getAllProjects, getProject, editProjectName, addTodo, deleteTodo }
 })();
