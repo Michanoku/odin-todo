@@ -1,11 +1,11 @@
-import { relationHandler } from './handler.js'; 
+import { relationHandler, storageHandler } from './handler.js'; 
 
 const manipulateDOM = (function () {
   const content = document.querySelector('#content');
   const projectList = document.querySelector('#project-list');
 
   document.querySelector('#add-project').addEventListener('click', () => {
-    addProject("New Project");
+    addNewProject("New Project");
   });
 
   document.querySelector('#add-todo').addEventListener('click', () => {
@@ -15,14 +15,14 @@ const manipulateDOM = (function () {
   function openProject(projectId) {
     content.textContent = '';
     const projectObject = relationHandler.getProject(projectId);
-    content.textContent = projectObject.project.name;
+    content.textContent = `${projectObject.project.name} (${ projectObject.checked}/${ projectObject.total})`;
   }
 
-  function addProject(name) {
+  function addNewProject(name) {
     const project = relationHandler.addProject(name);
     const button = document.createElement('button');
     button.classList.add('project-button');
-    button.textContent = `${project.name} (${project.checked}/${project.total})`;
+    button.textContent = `${project.name} (0/0)`;
     button.dataset.id = project.id;
     projectList.appendChild(button);
     button.addEventListener('click', () =>{
@@ -30,7 +30,14 @@ const manipulateDOM = (function () {
     });
   }
 
-  return { addProject, openProject };
+  function loadInitial() {
+    const currentProjects = storageHandler.loadInitial();
+    currentProjects.forEach(project => {
+      // TODO WRITE ADDIN GINITIAL PROJECTS
+    });
+  }
+
+  return { addNewProject, openProject };
 })();
 
 export { manipulateDOM }

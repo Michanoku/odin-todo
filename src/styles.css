@@ -29,17 +29,12 @@ input {
 .project-button {
   font-size: 1.3rem;
   border: 0;
-  background-color: transparent;
   color: var(--fixed-text);
   cursor: pointer;
 }
 
 .project-button:hover {
   color: var(--fixed-text-muted);
-}
-
-.project-button::before {
-  content: '⚬ ';
 }
 
 #title {
@@ -61,22 +56,15 @@ input {
 #container {
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 5fr;
   grid-template-rows: 4rem 1fr;
   grid-template-areas: 
-    ' titlebar titlebar'
-    'sidebar content';
+    ' titlebar'
+    'content';
 }
 
 #titlebar {
   grid-area: titlebar;
   background-color: var(--titlebar-background);
-}
-
-#sidebar {
-  grid-area: sidebar;
-  background-color: var(--sidebar-background);
-  padding: 1.5rem;
 }
 
 #content {
@@ -86,4 +74,7 @@ input {
   -webkit-box-shadow: inset 6px 6px 5px 5px #A5A5A5; 
   box-shadow: inset 6px 6px 5px 5px #A5A5A5;
   padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
 }

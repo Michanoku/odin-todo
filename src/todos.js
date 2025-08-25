@@ -36,6 +36,14 @@ const todos = (function () {
     todoArray.splice(todoIndex, 1);
   }
 
+  function getAllTodo() {
+    return todoArray;
+  };
+
+  function setTodo(storedTodo) {
+    todoArray.push(...storedTodo);
+  }
+
   function getTodo(todoId) {
     return todoArray.find((todo) => todo.id === todoId);
   }
@@ -46,7 +54,7 @@ const todos = (function () {
     return todo.checked;
   }
 
-  return { createTodo, deleteTodo, toggleTodo, getTodo };
+  return { createTodo, deleteTodo, toggleTodo, getTodo, getAllTodo, setTodo };
 }());
   
 export { todos }

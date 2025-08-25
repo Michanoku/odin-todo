@@ -1,6 +1,31 @@
 import { projects } from './projects.js';
 import { todos } from './todos.js';
 
+const storageHandler = (function () {
+  function loadInitial() {
+    if (!localStorage.getItem("projects")) {
+      relationHandler.addProject("Default");
+      localStorage.setItem('projects', JSON.stringify(projects.getAllProjects()));
+      localStorage.setItem('todo', JSON.stringify(todos.getAllTodo()));
+      localStorage.setItem('relations', JSON.stringify(relationHandler.getRelations()));
+    } else {
+      const storedArray = JSON.parse(localStorage.getItem('projects'));
+      const storedTodo = JSON.parse(localStorage.getItem('todo'));
+      const storedRelations = JSON.parse(localStorage.getItem('relations'));
+      projects.setProjects(storedArray);
+      todos.setTodo(storedTodo);
+      relationHandler.setRelations(storedRelations);
+    }
+    const currentRelations = relationHandler.getRelations();
+    const currentProjects = new Array();
+    for (const projectId in currentRelations) {
+      currentProjects.push(relationHandler.getProject(projectId));
+    }
+    return currentProjects;
+  }
+
+})();
+
 const relationHandler = (function() {
   const relations = new Object();
 
@@ -45,7 +70,15 @@ const relationHandler = (function() {
     return {project: project, todo: projectTodo, total: total, checked: checked};
   }
 
-  return { addProject, addTodo, removeProject, removeTodo, getProject }
+  function getRelations() {
+    return relations;
+  }
+
+  function setRelations(storedRelations) {
+    relations.push(...storedRelations);
+  }
+
+  return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations }
 })();
 
 export { relationHandler }

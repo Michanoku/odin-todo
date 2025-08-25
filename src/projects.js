@@ -24,6 +24,10 @@ const projects = (function () {
     return projectsArray;
   };
 
+  function setProjects(storedArray) {
+    projectsArray.push(...storedArray);
+  }
+
   function getProject(projectId) {
     return projectsArray.find((project) => project.id === projectId);
   };
@@ -33,7 +37,7 @@ const projects = (function () {
     project.name = newName;
   };
 
-  return { createProject, deleteProject, getAllProjects, getProject, editProjectName };
+  return { createProject, deleteProject, getAllProjects, setProjects, getProject, editProjectName };
 })();
 
 export { projects }
