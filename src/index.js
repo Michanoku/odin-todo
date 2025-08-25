@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import relationHandler from './handler.js';
+import { relationHandler } from './handler.js';
 
 document.querySelector('#add-project').addEventListener('click', () => {
   relationHandler.addProject("New Project");

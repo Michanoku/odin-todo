@@ -11,7 +11,7 @@ const projects = (function () {
 
   function createProject(name) {
     const project = new Project(name);
-    projectsArray.append(project);
+    projectsArray.push(project);
     return project.id;
   };
 
