@@ -1,14 +1,13 @@
 import { projects } from './projects.js';
 import { todos } from './todos.js';
-import { manipulateDOM } from './interface.js';
 
 const relationHandler = (function() {
   const relations = new Object();
 
   function addProject(name) {
-    const newProjectId = projects.createProject(name);
-    relations[newProjectId] = new Array();
-    manipulateDOM.addProject(projects.getProject(newProjectId));
+    const newProject = projects.createProject(name);
+    relations[newProject.id] = new Array();
+    return newProject;
   }
   
   function addTodo(projectId, title, description, dueDate, priority, notes, checklist) {
@@ -32,7 +31,19 @@ const relationHandler = (function() {
     todos.deleteTodo(todoId);
   };
 
-  return { addProject, addTodo, removeProject, removeTodo }
+  function getProject(projectId) {
+    const project = projects.getProject(projectId);
+    const projectRelations = relations[projectId];
+    const projectTodo = new Array();
+    for (const todoId in projectRelations) {
+      const todo = todos.getTodo(todoId);
+      projectTodo.push(todo);
+    };
+
+    return {project: project, todo: projectTodo};
+  }
+
+  return { addProject, addTodo, removeProject, removeTodo, getProject }
 })();
 
 export { relationHandler }

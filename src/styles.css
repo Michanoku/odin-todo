@@ -1,8 +1,10 @@
 :root {
   font-size: 16px;
-  --sidebar-background: red;
-  --content-background: yellow;
-  --fixed-text: black;
+  --titlebar-background: #B8BDB5;
+  --sidebar-background: #D2D4C8;
+  --content-background: #E0E2DB;
+  --fixed-text: #000000;
+  --fixed-text-muted: #1e1e1e;
   color: var(--fixed-text);
 }
 
@@ -19,20 +21,69 @@ input {
   font: inherit;
 }
 
+.menu-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.project-button {
+  font-size: 1.3rem;
+  border: 0;
+  background-color: transparent;
+  color: var(--fixed-text);
+  cursor: pointer;
+}
+
+.project-button:hover {
+  color: var(--fixed-text-muted);
+}
+
+.project-button::before {
+  content: '⚬ ';
+}
+
+#title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.5rem;
+}
+
+/* Grid Content */
 #container {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 5fr;
-  grid-template-areas: 'sidebar content';
+  grid-template-rows: 4rem 1fr;
+  grid-template-areas: 
+    ' titlebar titlebar'
+    'sidebar content';
+}
+
+#titlebar {
+  grid-area: titlebar;
+  background-color: var(--titlebar-background);
 }
 
 #sidebar {
   grid-area: sidebar;
   background-color: var(--sidebar-background);
+  padding: 1.5rem;
 }
 
 #content {
   grid-area: content;
   background-color: var(--content-background);
   overflow-y: auto;
+  -webkit-box-shadow: inset 6px 6px 5px 5px #A5A5A5; 
+  box-shadow: inset 6px 6px 5px 5px #A5A5A5;
+  padding: 1.5rem;
 }

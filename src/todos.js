@@ -45,7 +45,7 @@ const todos = (function () {
     return todo.checked;
   }
 
-  return { createTodo, deleteTodo, toggleTodo };
+  return { createTodo, deleteTodo, toggleTodo, getTodo };
 }());
   
 export { todos }

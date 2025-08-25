@@ -12,7 +12,7 @@ const projects = (function () {
   function createProject(name) {
     const project = new Project(name);
     projectsArray.push(project);
-    return project.id;
+    return project;
   };
 
   function deleteProject(projectId) {
