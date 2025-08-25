@@ -1,5 +1,6 @@
 import projects from './projects.js';
 import todos from './todos.js';
+import manipulateDom from './interface.js';
 
 const relationHandler = (function() {
   const relations = new Object();
@@ -7,6 +8,7 @@ const relationHandler = (function() {
   function addProject(name) {
     const newProjectId = projects.createProject(name);
     relations[newProjectId] = new Array();
+    manipulateDom.addProject(projects.getProject(newProjectId));
   }
   
   function addTodo(projectId, title, description, dueDate, priority, notes, checklist) {
@@ -32,3 +34,5 @@ const relationHandler = (function() {
 
   return { addProject, addTodo, removeProject, removeTodo }
 })();
+
+export { relationHandler }
