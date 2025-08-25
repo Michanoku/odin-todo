@@ -34,4 +34,5 @@ input {
 #content {
   grid-area: content;
   background-color: var(--content-background);
+  overflow-y: auto;
 }
