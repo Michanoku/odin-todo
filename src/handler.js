@@ -39,8 +39,10 @@ const relationHandler = (function() {
       const todo = todos.getTodo(todoId);
       projectTodo.push(todo);
     };
+    const total = projectTodo.length;
+    const checked = projectTodo.filter(todo => todo.checked).length;
 
-    return {project: project, todo: projectTodo};
+    return {project: project, todo: projectTodo, total: total, checked: checked};
   }
 
   return { addProject, addTodo, removeProject, removeTodo, getProject }

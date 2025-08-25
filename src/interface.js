@@ -22,7 +22,7 @@ const manipulateDOM = (function () {
     const project = relationHandler.addProject(name);
     const button = document.createElement('button');
     button.classList.add('project-button');
-    button.textContent = project.name;
+    button.textContent = `${project.name} (${project.checked}/${project.total})`;
     button.dataset.id = project.id;
     projectList.appendChild(button);
     button.addEventListener('click', () =>{

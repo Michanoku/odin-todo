@@ -21,6 +21,7 @@ const todos = (function () {
       this.priority = priority;
       this.notes = notes;
       this.checklist = checklist;
+      this.color = '000000';
       this.checked = false;
     }
   }
