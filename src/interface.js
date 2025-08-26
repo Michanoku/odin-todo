@@ -33,7 +33,14 @@ const manipulateDOM = (function () {
   function loadInitial() {
     const currentProjects = storageHandler.loadInitial();
     currentProjects.forEach(project => {
-      // TODO WRITE ADDIN GINITIAL PROJECTS
+      const button = document.createElement('button');
+      button.classList.add('project-button');
+      button.textContent = `${project.project.name} (${ project.checked}/${ project.total})`;
+      button.dataset.id = project.project.id;
+      projectList.appendChild(button);
+      button.addEventListener('click', () =>{
+        openProject(button.dataset.id);
+      });
     });
   }
 

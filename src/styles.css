@@ -75,6 +75,14 @@ input {
   box-shadow: inset 6px 6px 5px 5px #A5A5A5;
   padding: 1.5rem;
   display: grid;
+  grid-template-rows: 3rem 1fr;
+  grid-template-areas: 'navigation' 'project-list';
+  gap: 1rem;
+}
+
+#project-list {
+  grid-area: project-list;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
 }

@@ -24,6 +24,7 @@ const storageHandler = (function () {
     return currentProjects;
   }
 
+  return { loadInitial }
 })();
 
 const relationHandler = (function() {
@@ -81,4 +82,4 @@ const relationHandler = (function() {
   return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations }
 })();
 
-export { relationHandler }
+export { relationHandler, storageHandler }
