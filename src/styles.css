@@ -29,8 +29,13 @@ input {
 .project-button {
   font-size: 1.3rem;
   border: 0;
-  color: var(--fixed-text);
   cursor: pointer;
+  height: 200px;
+}
+
+#add-project {
+  color: black;
+  background-color: var(--titlebar-background);
 }
 
 .project-button:hover {
@@ -57,9 +62,7 @@ input {
   height: 100vh;
   display: grid;
   grid-template-rows: 4rem 1fr;
-  grid-template-areas: 
-    ' titlebar'
-    'content';
+  grid-template-areas: ' titlebar' 'content';
 }
 
 #titlebar {
@@ -83,6 +86,6 @@ input {
 #project-list {
   grid-area: project-list;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
