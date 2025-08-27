@@ -1,7 +1,7 @@
 const projects = (function () {
   // Create array to house all projects
   const projectsArray = new Array();
-  const defaultBG = 'B8BDB5';
+  const defaultBG = 'f5f5f5';
 
 
   class Project {

@@ -1,8 +1,8 @@
 :root {
   font-size: 16px;
-  --titlebar-background: #B8BDB5;
-  --sidebar-background: #D2D4C8;
-  --content-background: #E0E2DB;
+  --titlebar-background: #38618C;
+  --default-project-background: #f5f5f5;
+  --content-background: #F4F0BB;
   --fixed-text: #000000;
   --fixed-text-muted: #1e1e1e;
   color: var(--fixed-text);
@@ -26,21 +26,21 @@ input {
   font-weight: 700;
 }
 
-.project-card {
+.project-button {
   border: 0;
   font-size: 1.3rem;
   width: 300px;
   height: 200px;
   transition: all 1s ease-in-out;
-}
-
-.project-button {
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
+  -webkit-box-shadow: 4px 4px 3px 3px #A5A5A5; 
+  box-shadow: 4px 4px 3px 3px #A5A5A5;
 }
 
 .project-button:hover {
   transform: scale(0.95);
+  color: var(--fixed-text-muted);
 }
 
 #add-project {
@@ -49,11 +49,8 @@ input {
   background-color: var(--titlebar-background);
 }
 
-.project-button:hover {
-  color: var(--fixed-text-muted);
-}
-
 #title {
+  color: #f5f5f5;
   font-size: 2.5rem;
   text-align: center;
 }
@@ -99,14 +96,27 @@ input {
 
 #navigation {
   display: flex;
-  justify-content: start;
-  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 1rem;
   padding: 0rem 1rem;
   font-size: 2rem;
 }
 
+#project-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-wrap: break-word;
+}
+
 #back {
   display: none;
+  font-size: 2.5rem;
+  border: 0;
+  background-color: transparent;
+  flex: 0 0 auto;
+  cursor: pointer;
 }
 
 #project-list {
