@@ -43,11 +43,6 @@ input {
   transform: scale(0.95);
 }
 
-#todo-list {
-  display: none;
-  grid-area: project-list;
-}
-
 #add-project {
   color: black;
   font-size: 6rem;
@@ -61,8 +56,6 @@ input {
 #title {
   font-size: 2.5rem;
   text-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 #project-list {
@@ -82,6 +75,9 @@ input {
 }
 
 #titlebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-area: titlebar;
   background-color: var(--titlebar-background);
   z-index: 200;
@@ -101,9 +97,27 @@ input {
   position: relative;
 }
 
+#navigation {
+  display: flex;
+  justify-content: start;
+  gap: 2rem;
+  padding: 0rem 1rem;
+  font-size: 2rem;
+}
+
+#back {
+  display: none;
+}
+
 #project-list {
   grid-area: project-list;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
+
+#todo-list {
+  display: none;
+  grid-area: project-list;
+}
+
