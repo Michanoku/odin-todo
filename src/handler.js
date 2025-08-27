@@ -33,7 +33,7 @@ const relationHandler = (function() {
   function addProject(name) {
     const newProject = projects.createProject(name);
     relations[newProject.id] = new Array();
-    return newProject;
+    return {project: newProject, todo: new Array(), total: 0, checked: 0};
   }
   
   function addTodo(projectId, title, description, dueDate, priority, notes, checklist) {

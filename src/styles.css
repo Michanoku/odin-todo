@@ -35,6 +35,7 @@ input {
 
 #add-project {
   color: black;
+  font-size: 6rem;
   background-color: var(--titlebar-background);
 }
 
