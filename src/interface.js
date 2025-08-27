@@ -32,11 +32,24 @@ const manipulateDOM = (function () {
     projectList.insertBefore(button, addProject);
   }
 
+  // Calculate whether the text color needs to be black or white
+  calculateTextColor(backgroundColor) {
+    const red = `${backgroundColor[0]}${backgroundColor[1]}`;
+    const green = `${backgroundColor[2]}${backgroundColor[3]}`;
+    const blue = `${backgroundColor[4]}${backgroundColor[5]}`;
+
+    // https://stackoverflow.com/questions/11867545/change-text-color-based-on-brightness-of-the-covered-background-area
+    const brightness = ((red * 299) + (green * 587) + (blue * 114)) / 1000;
+    return brightness < 128 ? '#ffffff' : '#000000';
+  }
+
   // Create the button for the project (TODO, needs more INFO and styling)
   function createProjectButton(project) {
       const button = document.createElement('button');
       button.classList.add('project-button');
       button.textContent = `${project.project.name} (${ project.checked}/${ project.total})`;
+      button.style.backgroundColor = `#${project.project.color}`;
+      button.style.color = calculateTextColor(project.project.color);
       button.dataset.id = project.project.id;
       button.addEventListener('click', () =>{
         openProject(button.dataset.id);

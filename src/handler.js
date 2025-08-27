@@ -76,7 +76,8 @@ const relationHandler = (function() {
   }
 
   function setRelations(storedRelations) {
-    relations.push(...storedRelations);
+    Object.keys(relations).forEach(project => delete relations[project]);
+    Object.keys(storedRelations).forEach(project => relations[project] = storedRelations[project]);
   }
 
   return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations }

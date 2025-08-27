@@ -1,11 +1,14 @@
 const projects = (function () {
   // Create array to house all projects
   const projectsArray = new Array();
+  const defaultBG = 'B8BDB5';
+
 
   class Project {
     constructor(name) {
       this.id = crypto.randomUUID();
       this.name = name;
+      this.color = defaultBG;
     }
   }
 
