@@ -5,6 +5,7 @@ const manipulateDOM = (function () {
 
   const content = document.querySelector('#content');
   const projectList = document.querySelector('#project-list');
+  const todoList = document.querySelector('#todo-list');
   const addProject = document.querySelector('#add-project');
 
   // Event handler to add a project button to the content container
@@ -13,10 +14,14 @@ const manipulateDOM = (function () {
   });
 
   // Open a project 
-  function openProject(projectId) {
+  function openProject(button) {
+    content.style.backgroundColor = button.style.backgroundColor;
+    projectList.style.display = 'none';
+    todoList.style.display = 'block';
+    /*
     content.textContent = '';
     const projectObject = relationHandler.getProject(projectId);
-    content.textContent = `${projectObject.project.name} (${ projectObject.checked}/${ projectObject.total})`;
+    content.textContent = `${projectObject.project.name} (${ projectObject.checked}/${ projectObject.total})`;*/
   }
 
   // Add a new project, as opposed to adding an existing project
@@ -33,7 +38,7 @@ const manipulateDOM = (function () {
   }
 
   // Calculate whether the text color needs to be black or white
-  calculateTextColor(backgroundColor) {
+  function calculateTextColor(backgroundColor) {
     const red = `${backgroundColor[0]}${backgroundColor[1]}`;
     const green = `${backgroundColor[2]}${backgroundColor[3]}`;
     const blue = `${backgroundColor[4]}${backgroundColor[5]}`;
@@ -46,13 +51,13 @@ const manipulateDOM = (function () {
   // Create the button for the project (TODO, needs more INFO and styling)
   function createProjectButton(project) {
       const button = document.createElement('button');
-      button.classList.add('project-button');
+      button.classList.add('project-card', 'project-button');
       button.textContent = `${project.project.name} (${ project.checked}/${ project.total})`;
       button.style.backgroundColor = `#${project.project.color}`;
       button.style.color = calculateTextColor(project.project.color);
       button.dataset.id = project.project.id;
       button.addEventListener('click', () =>{
-        openProject(button.dataset.id);
+        openProject(button);
       });
     return button;
   }

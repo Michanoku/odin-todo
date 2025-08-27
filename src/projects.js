@@ -20,7 +20,7 @@ const projects = (function () {
 
   function deleteProject(projectId) {
     const projectIndex = projectsArray.findIndex((project) => project.id === projectId);
-    projectsArray.splice(todoIndex, 1);
+    projectsArray.splice(projectIndex, 1);
   }
 
   function getAllProjects() {
