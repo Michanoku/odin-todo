@@ -33,6 +33,7 @@ const relationHandler = (function() {
   function addProject(name) {
     const newProject = projects.createProject(name);
     relations[newProject.id] = new Array();
+    localStorage.setItem('relations', JSON.stringify(relationHandler.getRelations()));
     return {project: newProject, todo: new Array(), total: 0, checked: 0};
   }
   
@@ -48,6 +49,7 @@ const relationHandler = (function() {
     };
     const projectIndex = relations.indexOf(project);
     relations.splice(projectIndex, 1);
+    localStorage.setItem('relations', JSON.stringify(relationHandler.getRelations()));
   }
   
   function removeTodo(projectId, todoId) {

@@ -52,6 +52,7 @@ input {
   display: grid;
   grid-template-rows: 3fr 1fr;
   grid-template-areas: 'name' 'checked';
+  padding: 1rem;
 }
 
 .project-name {
@@ -62,9 +63,10 @@ input {
 
 .project-checked {
   grid-area: checked;
-  text-align: end;
+  display: flex;
+  justify-content: end;
+  align-items: end;
   font-size: 1rem;
-  color: #777777;
 }
 
 #title {
@@ -148,4 +150,3 @@ input {
   display: none;
   grid-area: project-list;
 }
-

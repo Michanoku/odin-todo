@@ -27,7 +27,7 @@ const manipulateDOM = (function () {
 
   // Open a project 
   function openProject(project, button) {
-    content.style.backgroundColor = button.style.backgroundColor;
+    content.style.backgroundColor = project.project.backgroundColor;
     content.style.color = project.project.textColor;
     projectName.textContent = project.project.name;
     projectList.style.display = 'none';
@@ -62,7 +62,10 @@ const manipulateDOM = (function () {
       projectName.textContent = project.project.name;
       projectName.style.color = project.project.textColor;
       const projectChecked = document.createElement('div');
-      projectChecked.textContent = `${ project.checked}/${ project.total}`;
+      projectChecked.classList.add('project-checked');
+      projectChecked.textContent = `${project.checked}/${project.total}`;
+      projectChecked.style.color = project.project.backgroundColor;
+      projectChecked.style.filter = `brightness(${project.project.subtextBrightness})`;
       button.append(projectName, projectChecked);
       button.style.backgroundColor = `#${project.project.color}`;
       button.dataset.id = project.project.id;
