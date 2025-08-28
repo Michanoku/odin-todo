@@ -1,3 +1,5 @@
+import { storageHandler } from './handler.js';
+
 const projects = (function () {
 
   // Create array to house all projects
@@ -78,7 +80,14 @@ const projects = (function () {
   function editProjectName(projectId, newName) {
     const project = getProject(projectId);
     project.name = newName;
+    storageHandler.saveData();
   };
+
+  function editProjectColor(projectId, color) {
+    const project = getProject(projectId);
+    project.backgroundColor = color;
+    storageHandler.saveData();
+  }
 
   return { createProject, deleteProject, getAllProjects, setProjects, getProject, editProjectName };
 })();

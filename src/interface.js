@@ -1,4 +1,5 @@
 import { relationHandler, storageHandler } from './handler.js'; 
+import { projects } from './projects.js';
 
 const manipulateDOM = (function () {
   // Add elements that will be used througout most DOM manipulations
@@ -8,6 +9,7 @@ const manipulateDOM = (function () {
   const addProject = document.querySelector('#add-project');
   const back = document.querySelector('#back');
   const projectName = document.querySelector('#project-name');
+  const colorButtons = document.querySelectorAll('.color-button');
 
   // Set the default background color
   const defaultBG = '#F4F0BB';
@@ -17,15 +19,38 @@ const manipulateDOM = (function () {
     addNewProject("New Project");
   });
 
+  projectName.addEventListener('click', () => {
+    if (projectName.dataset.id !== "none") {
+      projectName.readOnly = false;
+      projectName.style.border = `1px solid ${projectName.style.color}`;
+    }
+  });
+
+  projectName.addEventListener('blur', () => {
+    if (projectName.dataset.id !== "none") {
+      projectName.readOnly = true;
+      projectName.style.border = 0;
+      projects.editProjectName(projectName.dataset.id, projectName.value);
+    }
+  });
+
+  colorButtons.forEach(button => {
+    content.style.backgroundColor = button.style.backgroundColor;
+    projects.editProjectColor(projectName.dataset.id, button.style.backgroundColor);
+  });
+
   // Event handler for the button to go back to the project list
   back.addEventListener('click', () => {
+    // Reload project list before going back (something may have changed)
+    loadInitial();
     // Set background color to default
     content.style.backgroundColor = defaultBG;
     // Show the list and hide the rest
     projectList.style.display = 'grid';
     todoList.style.display = 'none';
     back.style.display = 'none';
-    projectName.textContent = 'Projects';
+    projectName.value = 'Projects';
+    projectName.dataset.id = 'none';
   });
 
   // Open a project 
@@ -35,7 +60,8 @@ const manipulateDOM = (function () {
     content.style.color = project.project.textColor;
 
     // Set to display the project name, hide the project list and show the project
-    projectName.textContent = project.project.name;
+    projectName.value = project.project.name;
+    projectName.dataset.id = project.project.id;
     projectList.style.display = 'none';
     todoList.style.display = 'grid';
     back.style.display = 'block';
@@ -83,12 +109,18 @@ const manipulateDOM = (function () {
 
   // The function to load the initial content, either existing or new
   function loadInitial() {
+    // Remove all children besides the last button from the list (only relevant for reload)
+    Array.from(projectList.children).forEach(child => {
+      if (child !== addProject) {
+        projectList.removeChild(child);
+      } 
+    });
+    
     // Ask storageHandler to load the data. If no data exists, storageHandler will create initial data
     const initialProjects = storageHandler.loadInitial();
 
     // For each project the handler returned, create the button and add it to the page
     initialProjects.forEach(project => {
-
       // Create the project button
       const button = createProjectButton(project);
 
