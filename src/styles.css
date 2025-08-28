@@ -5,6 +5,7 @@
   --content-background: #F4F0BB;
   --fixed-text: #000000;
   --fixed-text-muted: #1e1e1e;
+  --neutral-text: #777777;
   color: var(--fixed-text);
 }
 
@@ -28,7 +29,6 @@ input {
 
 .project-button {
   border: 0;
-  font-size: 1.3rem;
   width: 300px;
   height: 200px;
   transition: all 1s ease-in-out;
@@ -40,17 +40,35 @@ input {
 
 .project-button:hover {
   transform: scale(0.95);
-  color: var(--fixed-text-muted);
 }
 
 #add-project {
-  color: black;
+  color: var(--default-project-background);
   font-size: 6rem;
   background-color: var(--titlebar-background);
 }
 
+.open-project {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  grid-template-areas: 'name' 'checked';
+}
+
+.project-name {
+  grid-area: name;
+  text-align: start;
+  font-size: 1.3rem;
+}
+
+.project-checked {
+  grid-area: checked;
+  text-align: end;
+  font-size: 1rem;
+  color: #777777;
+}
+
 #title {
-  color: #f5f5f5;
+  color: var(--default-project-background);
   font-size: 2.5rem;
   text-align: center;
 }

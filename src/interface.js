@@ -28,7 +28,7 @@ const manipulateDOM = (function () {
   // Open a project 
   function openProject(project, button) {
     content.style.backgroundColor = button.style.backgroundColor;
-    content.style.color = calculateTextColor(button.style.backgroundColor);
+    content.style.color = project.project.textColor;
     projectName.textContent = project.project.name;
     projectList.style.display = 'none';
     todoList.style.display = 'grid';
@@ -53,24 +53,18 @@ const manipulateDOM = (function () {
     projectList.insertBefore(button, addProject);
   }
 
-  // Calculate whether the text color needs to be black or white
-  function calculateTextColor(backgroundColor) {
-    const red = `${backgroundColor[0]}${backgroundColor[1]}`;
-    const green = `${backgroundColor[2]}${backgroundColor[3]}`;
-    const blue = `${backgroundColor[4]}${backgroundColor[5]}`;
-
-    // https://stackoverflow.com/questions/11867545/change-text-color-based-on-brightness-of-the-covered-background-area
-    const brightness = ((red * 299) + (green * 587) + (blue * 114)) / 1000;
-    return brightness < 128 ? '#ffffff' : '#000000';
-  }
-
   // Create the button for the project (TODO, needs more INFO and styling)
   function createProjectButton(project) {
       const button = document.createElement('button');
-      button.classList.add('project-button');
-      button.textContent = `${project.project.name} (${ project.checked}/${ project.total})`;
+      button.classList.add('project-button', 'open-project');
+      const projectName = document.createElement('div');
+      projectName.classList.add('project-name');
+      projectName.textContent = project.project.name;
+      projectName.style.color = project.project.textColor;
+      const projectChecked = document.createElement('div');
+      projectChecked.textContent = `${ project.checked}/${ project.total}`;
+      button.append(projectName, projectChecked);
       button.style.backgroundColor = `#${project.project.color}`;
-      button.style.color = calculateTextColor(project.project.color);
       button.dataset.id = project.project.id;
       button.addEventListener('click', () =>{
         openProject(project, button);
