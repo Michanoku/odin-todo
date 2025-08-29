@@ -3,7 +3,7 @@ import { storageHandler } from './handler.js';
 const projects = (function () {
 
   // Create array to house all projects
-  const projectsArray = new Array();
+  let projectsArray = new Array();
   // Set the default background color for new projects
   const defaultBG = '#f5f5f5';
 
@@ -30,6 +30,7 @@ const projects = (function () {
       return this._backgroundColor;
     }
 
+    // Set the background color and calculate the type
     set backgroundColor(color) {
       this._backgroundColor = color;
       this._backgroundType = this.calculateBackgroundType(color);
@@ -42,7 +43,7 @@ const projects = (function () {
 
     // If the background is light, darken it, if its dark, brighten it (to use for hover)
     get subtextBrightness() {
-      return this._backgroundType === 'light' ? '50%' : '150%';
+      return this._backgroundType === 'light' ? '50%' : '400%';
     }
   }
 
@@ -66,6 +67,7 @@ const projects = (function () {
 
   // Set all projects by creating them from data
   function setProjects(storedArray) {
+    projectsArray = new Array();
     for (const project in storedArray) {
       createProject(storedArray[project].name, storedArray[project]._backgroundColor, storedArray[project].id);
     }
@@ -77,19 +79,18 @@ const projects = (function () {
   };
 
   // Edit the project name
-  function editProjectName(projectId, newName) {
-    const project = getProject(projectId);
+  function editProjectName(project, newName) {
     project.name = newName;
     storageHandler.saveData();
   };
 
-  function editProjectColor(projectId, color) {
-    const project = getProject(projectId);
+  // Edit the color of the project (This is used when the project has already previously been received)
+  function editProjectColor(project, color) {
     project.backgroundColor = color;
     storageHandler.saveData();
   }
 
-  return { createProject, deleteProject, getAllProjects, setProjects, getProject, editProjectName };
+  return { createProject, deleteProject, getAllProjects, setProjects, getProject, editProjectName, editProjectColor };
 })();
 
 export { projects }

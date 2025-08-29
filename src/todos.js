@@ -3,7 +3,7 @@ import { format } from "date-fns";
 const todos = (function () {
 
   // Create an array to house all todos
-  const todoArray = new Array();
+  let todoArray = new Array();
 
   class Todo {
     constructor(
@@ -45,6 +45,7 @@ const todos = (function () {
 
   // Set all todos from data
   function setTodo(storedTodo) {
+    todoArray = new Array();
     for (const todo in storedTodo) {
       createTodo(
         storedTodo[todo].title, 

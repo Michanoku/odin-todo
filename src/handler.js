@@ -50,7 +50,7 @@ const storageHandler = (function () {
 const relationHandler = (function() {
 
   // Initiate the relations object that stores the relations
-  const relations = new Object();
+  let relations = new Object();
 
   // The function to add a project calls projects to create it and adds it to the relations array
   function addProject(name) {
@@ -126,14 +126,12 @@ const relationHandler = (function() {
     return relations;
   }
 
-  /* 
-  This function removes existing relations and sets new ones.
-  Currently only used on page load, so technically deletion is not necessary.
-  I want to keep it for now in case I change my mind later.
-  */
+  // Set relations when loaded from data
   function setRelations(storedRelations) {
-    Object.keys(relations).forEach(project => delete relations[project]);
-    Object.keys(storedRelations).forEach(project => relations[project] = storedRelations[project]);
+    relations = new Object();
+    for (const project in storedRelations) {
+      relations[project] = storedRelations[project];
+    }
   }
 
   return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations }
