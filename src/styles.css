@@ -179,3 +179,19 @@ input {
   display: none;
   grid-area: list;
 }
+
+#add-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#add-todo {
+  border: 0;
+  height: 3rem;
+  cursor: pointer;
+  color: var(--default-project-background);
+  font-size: 3rem;
+  background-color: transparent;
+}

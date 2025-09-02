@@ -12,23 +12,19 @@ const todos = (function () {
       description=null,
       dueDate=null,
       priority='Normal',
-      notes=new Array(), 
-      checklist=new Array(),
     ) {
       this.id = id ?? crypto.randomUUID();
       this.title = title;
       this.description = description;
-      this.dueDate = dueDate ? null : format(new Date(dateString), "yyyy-MM-dd");
+      this.dueDate = dueDate ? null : format(new Date(dueDate), "yyyy-MM-dd");
       this.priority = priority;
-      this.notes = notes;
-      this.checklist = checklist;
       this.checked = false;
     }
   }
 
   // Create a todo from the data input
-  function createTodo(title, description, dueDate, priority, notes, checklist, id = null) {
-    const todo = new Todo(title, description, dueDate, priority, notes, checklist, id);
+  function createTodo(title, description, dueDate, priority, id = null) {
+    const todo = new Todo(title, description, dueDate, priority, id);
     return todo;
   };
 
@@ -52,8 +48,6 @@ const todos = (function () {
         storedTodo[todo].description, 
         storedTodo[todo].dueDate, 
         storedTodo[todo].priority, 
-        storedTodo[todo].notes, 
-        storedTodo[todo].checklist, 
         storedTodo[todo].id,
       );
     }

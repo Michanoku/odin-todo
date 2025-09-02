@@ -63,8 +63,8 @@ const relationHandler = (function() {
   }
   
   // The function to add a todo calls the todos to create it and adds it to the relations array
-  function addTodo(projectId, title, description, dueDate, priority, notes, checklist) {
-    const newTodo = todos.createTodo(title, description, dueDate, priority, notes, checklist);
+  function addTodo(projectId, title, description, dueDate, priority) {
+    const newTodo = todos.createTodo(title, description, dueDate, priority);
     relations[projectId].push(newTodo.id);
     // Save the user data
     storageHandler.saveData();

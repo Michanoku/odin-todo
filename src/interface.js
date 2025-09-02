@@ -7,10 +7,11 @@ const manipulateDOM = (function () {
   const listTitle = document.querySelector('#list-title');
   const projectList = document.querySelector('#project-list');
   const projectTitle = document.querySelector('#project-title');
-  const todoList = document.querySelector('#todo-list');
+  const projectContent = document.querySelector('#project-content');
   const addProject = document.querySelector('#add-project');
   const back = document.querySelector('#back');
   const colorButtons = document.querySelector('#color-buttons');
+  const addContainer = document.querySelector('#add-container');
 
   // Set the default background color
   const defaultBG = '#F4F0BB';
@@ -30,10 +31,11 @@ const manipulateDOM = (function () {
     while (colorButtons.firstElementChild) {    
       colorButtons.removeChild(colorButtons.firstElementChild);
     };
+    addContainer.removeChild(addContainer.firstElementChild);
     // Show the list and hide the rest
     projectList.style.display = 'grid';
     listTitle.style.display = 'flex';
-    todoList.style.display = 'none';
+    projectContent.style.display = 'none';
     projectTitle.style.display = 'none';
   });
 
@@ -97,13 +99,13 @@ const manipulateDOM = (function () {
       button.append(projectName, projectChecked);
       button.style.backgroundColor = `#${project.color}`;
       button.addEventListener('click', () =>{
-        openProject(project);
+        openProject(project, todo);
       });
     return button;
   }
 
   // Open a project 
-  function openProject(project) {
+  function openProject(project, todo) {
     // Change the colors to the colors of the project, 
     content.style.backgroundColor = project.backgroundColor;
     back.style.color = project.textColor;
@@ -112,7 +114,7 @@ const manipulateDOM = (function () {
     // Set to display the project name, hide the project list and show the project
     projectList.style.display = 'none';
     listTitle.style.display = 'none';
-    todoList.style.display = 'grid';
+    projectContent.style.display = 'grid';
     projectTitle.style.display = 'flex';
   }
 
@@ -131,6 +133,13 @@ const manipulateDOM = (function () {
       });
       colorButtons.appendChild(button);
     });
+    const button = document.createElement('button');
+    button.setAttribute('id', 'add-todo');
+    button.textContent = '+';
+    button.addEventListener('click', () => {
+      todoCreator(project, button);
+    });
+    addContainer.appendChild(button);
     // Create the projectName input to change the name of the project
     const projectName = document.createElement("input");
     projectName.className = "text";
@@ -151,6 +160,16 @@ const manipulateDOM = (function () {
       projects.editProjectName(project, projectName.value);
     });
     projectTitle.insertBefore(projectName, back);
+  }
+
+  // Create the input to create todos
+  function todoCreator(project, button) {
+    button.style.display = 'none';
+
+    // Create Needed Input Elements
+    // Add Needed Event Listeners
+
+    button.style.display = 'block';
   }
 
   // Change the color of objects in a project
