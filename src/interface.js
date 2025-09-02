@@ -9,16 +9,33 @@ const manipulateDOM = (function () {
   const projectTitle = document.querySelector('#project-title');
   const projectContent = document.querySelector('#project-content');
   const addProject = document.querySelector('#add-project');
+  const addTodo = document.querySelector('#add-todo');
   const back = document.querySelector('#back');
-  const colorButtons = document.querySelector('#color-buttons');
+  const colorButtons = document.querySelectorAll('.color-button');
   const addContainer = document.querySelector('#add-container');
+  const creatorContainer = document.querySelector('#creator-container');
+  const projectId = document.querySelector('#project-id');
+  const cancel = document.querySelector('#cancel-button');
+  const addTodoForm = document.querySelector('#add-todo-form');
 
   // Set the default background color
   const defaultBG = '#F4F0BB';
+  let currentProject;
 
   // Event handler to add a project button to the content container
   addProject.addEventListener('click', () => {
     addNewProject("New Project");
+  });
+
+  addTodo.addEventListener('click', () => {
+    todoCreator();
+  });
+
+  colorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      projects.editProjectColor(currentProject, button.dataset.color);
+      changeColor();
+    });
   });
 
   // Event handler for the button to go back to the project list
@@ -27,16 +44,22 @@ const manipulateDOM = (function () {
     loadInitial();
     // Set background color to default
     content.style.backgroundColor = defaultBG;
+
+    // Remove elements that will be added when projects are opened
     projectTitle.removeChild(projectTitle.firstElementChild);
-    while (colorButtons.firstElementChild) {    
-      colorButtons.removeChild(colorButtons.firstElementChild);
-    };
-    addContainer.removeChild(addContainer.firstElementChild);
+
     // Show the list and hide the rest
     projectList.style.display = 'grid';
     listTitle.style.display = 'flex';
     projectContent.style.display = 'none';
     projectTitle.style.display = 'none';
+  });
+
+  cancel.addEventListener('click', () => {
+    addTodoForm.reset();
+    const addButton = document.querySelector('#add-todo');
+    creatorContainer.style.display = 'none';
+    addButton.style.display = 'block';
   });
 
   // Add a new project, as opposed to adding an existing project
@@ -106,11 +129,10 @@ const manipulateDOM = (function () {
 
   // Open a project 
   function openProject(project, todo) {
+    currentProject = project;
     // Change the colors to the colors of the project, 
-    content.style.backgroundColor = project.backgroundColor;
-    back.style.color = project.textColor;
-
-    addInput(project);
+    changeColor();
+    addInput();
     // Set to display the project name, hide the project list and show the project
     projectList.style.display = 'none';
     listTitle.style.display = 'none';
@@ -119,100 +141,51 @@ const manipulateDOM = (function () {
   }
 
   // Add color buttons to a project
-  function addInput(project) {
-    // Set colors to use for buttons to change background color
-    const colors = ["#38618C", "#EC4E20", "#FF9505", "#6A0136", "#35CE8D", "#f5f5f5", "#19180A"];
-    // Create a button for each color and add the required listeners
-    colors.forEach(color => {
-      const button = document.createElement('button');
-      button.classList.add('color-button');
-      button.style.backgroundColor = color;
-      button.addEventListener('click', () => {
-        projects.editProjectColor(project, color);
-        changeColor(project);
-      });
-      colorButtons.appendChild(button);
-    });
-    const button = document.createElement('button');
-    button.setAttribute('id', 'add-todo');
-    button.textContent = '+';
-    button.addEventListener('click', () => {
-      todoCreator(project, button);
-    });
-    addContainer.appendChild(button);
+  function addInput() {
+
     // Create the projectName input to change the name of the project
     const projectName = document.createElement("input");
     projectName.className = "text";
     projectName.type = "text";
-    projectName.value = project.name;
+    projectName.value = currentProject.name;
     projectName.readOnly = true;
     projectName.id = "project-name";
-    projectName.style.color = project.textColor;
+    projectName.style.color = currentProject.textColor;
 
     // Add one EventListener for click and one for blur
     projectName.addEventListener('click', () => {
       projectName.readOnly = false;
-      projectName.style.border = `1px solid ${project.textColor}`;
+      projectName.style.border = `1px solid ${currentProject.textColor}`;
     });
     projectName.addEventListener('blur', () => {
       projectName.readOnly = true;
       projectName.style.border = 0;
-      projects.editProjectName(project, projectName.value);
+      projects.editProjectName(currentProject, projectName.value);
     });
     projectTitle.insertBefore(projectName, back);
   }
 
   // Create the input to create todos
-  function todoCreator(project, button) {
-    button.style.display = 'none';
+  function todoCreator() {
+    addTodo.style.display = 'none';
 
-    // Create Needed Input Elements
-    const titleInput = document.createElement('input');
-    titleInput.setAttribute('type', 'text');
-    titleInput.setAttribute('maxlength', 64);
-    titleInput.classList.add('todo-creator');
-    const subtitleInput = document.createElement('textarea');
-    subtitleInput.setAttribute('rows', 2);
-    subtitleInput.setAttribute('maxlength', 128);
-    subtitleInput.classList.add('todo-creator');
-    const smallOptionsDiv = document.createElement('div');
-    const dateInput = document.createElement('input');
-    dateInput.setAttribute('type', 'date');
-    dateInput.classList.add('todo-creator');
-    const priorityInput = document.createElement('select');
-    priorityInput.classList.add('todo-creator');
-    const options = ["Low", "Normal", "High"];
-    options.forEach(option => {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      if (option === "Normal") {
-        optionElement.selected = true;
-      }
-      priorityInput.appendChild(optionElement);
-    });
-    const confirmButton = document.createElement('button');
-    confirmButton.textContent = "Add";
-    confirmButton.setAttribute('id', 'confirm');
-    smallOptionsDiv.append(dateInput, priorityInput);
-    addContainer.append(titleInput, subtitleInput, smallOptionsDiv, confirmButton);
+    creatorContainer.style.display = 'block';
+    projectId.value = currentProject.id;
 
     // Add Needed Event Listeners
-
-    button.style.display = 'block';
   }
 
   // Change the color of objects in a project
-  function changeColor(project) {
-    content.style.backgroundColor = project.backgroundColor;
+  function changeColor() {
+    content.style.backgroundColor = currentProject.backgroundColor;
     const texts = document.querySelectorAll('.text');
     const subtexts = document.querySelectorAll('.subtext');
     texts.forEach(text => {
-      text.style.color = project.textColor;
+      text.style.color = currentProject.textColor;
     });
     subtexts.forEach(subtext => {
-      subtext.style.color = project.backgroundColor;
-      subtext.style.filter = `brightness(${project.subtextBrightness})`;
+      subtext.style.color = currentProject.backgroundColor;
+      subtext.style.filter = `brightness(${currentProject.subtextBrightness})`;
     });
   }
 

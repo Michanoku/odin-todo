@@ -69,7 +69,7 @@ input {
   font-size: 1rem;
 }
 
-#color-buttons {
+#color-button-container {
   display: flex;
   justify-content: start;
   gap: 1rem;
@@ -84,6 +84,34 @@ input {
   cursor: pointer;
 }
 
+.color-button[data-color="#38618C"] { 
+  background-color: #38618C; 
+}
+
+.color-button[data-color="#EC4E20"] { 
+  background-color: #EC4E20; 
+}
+
+.color-button[data-color="#FF9505"] { 
+  background-color: #FF9505; 
+}
+
+.color-button[data-color="#6A0136"] { 
+  background-color: #6A0136; 
+}
+
+.color-button[data-color="#35CE8D"] { 
+  background-color: #35CE8D; 
+}
+
+.color-button[data-color="#f5f5f5"] { 
+  background-color: #f5f5f5; 
+}
+
+.color-button[data-color="#19180A"] { 
+  background-color: #19180A; 
+}
+
 #title {
   color: var(--default-project-background);
   font-size: 2.5rem;
@@ -96,6 +124,10 @@ input {
   gap: 0.5rem;
   align-items: start;
   padding: 0.5rem;
+}
+
+#project-content {
+  display: none;
 }
 
 /* Grid Content */
@@ -184,7 +216,21 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+}
+
+#creator-container {
+  padding: 1rem;
+  background-color: var(--content-background);
+  border: 1px solid var(--neutral-text);
+  border-radius: 5px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+
 }
 
 #add-todo {
@@ -195,3 +241,49 @@ input {
   font-size: 3rem;
   background-color: transparent;
 }
+
+.todo-creator {
+  font-size: 1.2rem;
+  color: var(--fixed-text);
+  background-color: var(--default-project-background);
+  border: 1px solid var(--fixed-text);
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+}
+
+.long-input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#creator-container {
+ display: none;
+}
+
+#confirm-button {
+  background-color: var(--titlebar-background);
+  color: var(--default-project-background);
+  border: 1px solid var(--default-project-background);
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+#cancel-button {
+  background-color: var(--fixed-text-muted);
+  color: var(--default-project-background);
+  border: 1px solid var(--default-project-background);
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+.small-options {
+  white-space: nowrap;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+} 
