@@ -167,6 +167,36 @@ const manipulateDOM = (function () {
     button.style.display = 'none';
 
     // Create Needed Input Elements
+    const titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('maxlength', 64);
+    titleInput.classList.add('todo-creator');
+    const subtitleInput = document.createElement('textarea');
+    subtitleInput.setAttribute('rows', 2);
+    subtitleInput.setAttribute('maxlength', 128);
+    subtitleInput.classList.add('todo-creator');
+    const smallOptionsDiv = document.createElement('div');
+    const dateInput = document.createElement('input');
+    dateInput.setAttribute('type', 'date');
+    dateInput.classList.add('todo-creator');
+    const priorityInput = document.createElement('select');
+    priorityInput.classList.add('todo-creator');
+    const options = ["Low", "Normal", "High"];
+    options.forEach(option => {
+      const optionElement = document.createElement('option');
+      optionElement.value = option;
+      optionElement.textContent = option;
+      if (option === "Normal") {
+        optionElement.selected = true;
+      }
+      priorityInput.appendChild(optionElement);
+    });
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = "Add";
+    confirmButton.setAttribute('id', 'confirm');
+    smallOptionsDiv.append(dateInput, priorityInput);
+    addContainer.append(titleInput, subtitleInput, smallOptionsDiv, confirmButton);
+
     // Add Needed Event Listeners
 
     button.style.display = 'block';
