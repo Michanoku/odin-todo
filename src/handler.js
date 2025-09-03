@@ -19,6 +19,7 @@ const storageHandler = (function () {
     }
     // Load the current relations and create an array of projects to load initially
     const initialRelations = relationHandler.getRelations();
+    console.log(initialRelations)
     const initialProjects = new Array();
     for (const projectId in initialRelations) {
       initialProjects.push(relationHandler.getProject(projectId));
@@ -111,13 +112,14 @@ const relationHandler = (function() {
       const todo = todos.getTodo(todoId);
       projectTodo.push(todo);
     };
-
+    console.log(projectRelations)
+    console.log(projectTodo);
     // Check how many todos exist and how many are checked
     const total = projectTodo.length;
     const checked = projectTodo.filter(todo => todo.checked).length;
 
     // Return the project, the todo list and total and checked todo amounts
-    return {project: project, todo: projectTodo, total: total, checked: checked};
+    return {project: project, todoArray: projectTodo, total: total, checked: checked};
   }
 
   // Reload the todo when the project is already open

@@ -18,7 +18,13 @@ const todos = (function () {
       this.description = description;
       this.dueDate = dueDate ? null : format(new Date(dueDate), "yyyy-MM-dd");
       this.id = id ?? crypto.randomUUID();
-      this.checked = false;
+      this._checked = false;
+    }
+    get checked() {
+      return this._checked;
+    }
+    set checked(value) {
+      this._checked = value;
     }
   }
 
