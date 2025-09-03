@@ -26,9 +26,11 @@ input {
 /* General site layout */
 #container {
   height: 100vh;
+  width: 100vw;
   display: grid;
   grid-template-rows: 4rem 1fr;
-  grid-template-areas: ' titlebar' 'content';
+  grid-template-areas: ' titlebar' 'content-area';
+  overflow-x: hidden;
 }
 
 #titlebar {
@@ -50,15 +52,14 @@ input {
 
 /* This is the site layout for projects and project content */
 #content {
-  grid-area: content;
+  grid-area: content-area;
   background-color: var(--content-background);
-  overflow-y: auto;
-  padding: 1.5rem;
+  padding: 0.8rem;
   display: grid;
-  grid-template-rows: 3rem 1fr;
+  grid-template-rows: 3.3rem 1fr;
   grid-template-areas: 'title' 'list';
-  gap: 1rem;
-  position: relative;
+  gap: 0.5rem;
+  overflow-y: scroll;
 }
 
 /* Contents within the project list */
@@ -68,15 +69,16 @@ input {
   align-items: center;
   justify-content: start;
   flex-wrap: nowrap;
-  gap: 1rem;
+  gap: 0.5rem;
   font-size: 2rem;
 }
 
 #project-list {
   grid-area: list;
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 /* Project button that opens projects */
@@ -129,14 +131,11 @@ input {
   display: none;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  font-size: 2rem;  
+  font-size: 2rem;
 }
 
 #project-name {
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 80%;
   word-wrap: break-word;
   cursor: text;
   transition: filter 0.2s ease;
@@ -153,7 +152,6 @@ input {
   font-size: 2.5rem;
   border: 0;
   background-color: transparent;
-  flex: 0 0 auto;
   cursor: pointer;
 }
 
@@ -162,7 +160,6 @@ input {
   grid-area: list;
   grid-template-rows: 2.5rem 1fr 2.5rem;
   grid-template-areas: 'color-buttons' 'todo-list' 'delete-button';
-  overflow-y: scroll;
 }
 
 #color-button-container {
@@ -232,7 +229,9 @@ input {
   border: 1px solid var(--neutral-text);
   border-radius: 5px;
   overflow: hidden;
+}
 
+#add-todo-form {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -258,11 +257,11 @@ input {
   border: 1px solid var(--fixed-text);
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
 .long-input {
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 #creator-container {
@@ -299,14 +298,11 @@ input {
   background-color: var(--fixed-text-muted);
 }
 
-.small-options {
-  white-space: nowrap;
+#lower-buttons {
   display: flex;
-  width: 100%;
   align-items: center;
-  justify-content: start;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  justify-content: center;
+  gap: 0.5rem;
 } 
 
 #delete-button-container {
