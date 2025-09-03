@@ -7,24 +7,24 @@ const todos = (function () {
 
   class Todo {
     constructor(
-      id = null,
-      title='Untitled',
-      description=null,
-      dueDate=null,
-      priority='Normal',
+      title,
+      priority,
+      description,
+      dueDate,
+      id,
     ) {
-      this.id = id ?? crypto.randomUUID();
       this.title = title;
+      this.priority = priority;
       this.description = description;
       this.dueDate = dueDate ? null : format(new Date(dueDate), "yyyy-MM-dd");
-      this.priority = priority;
+      this.id = id ?? crypto.randomUUID();
       this.checked = false;
     }
   }
 
   // Create a todo from the data input
-  function createTodo(title, description, dueDate, priority, id = null) {
-    const todo = new Todo(title, description, dueDate, priority, id);
+  function createTodo(title, priority, description, dueDate, id) {
+    const todo = new Todo(title, priority, description, dueDate, id);
     return todo;
   };
 

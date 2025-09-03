@@ -18,6 +18,8 @@ const manipulateDOM = (function () {
   const projectName = document.querySelector('#project-name');
   const back = document.querySelector('#back');
   const colorButtons = document.querySelectorAll('.color-button');
+  const todoList = document.querySelector('todo-list');
+  const addContainer = document.querySelector('#add-container');
   const addTodo = document.querySelector('#add-todo');
   const deleteProject = document.querySelector('#delete-project');
 
@@ -72,6 +74,24 @@ const manipulateDOM = (function () {
     creatorContainer.style.display = 'block';
   });
 
+  addTodoForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const todoData = new FormData(addTodoForm);
+    const title = todoData.get("title") || null;
+    const priority = todoData.get("priority") || null;
+    const description = todoData.get("description") || null;
+    const date = todoData.get("date") || null;
+    if (!title) {
+      alert('Please set a title for your todo item.');
+      return;
+    } else if (!priority) {
+      alert('Please set the priority for your todo item.');
+      return;
+    }
+    relationHandler.addTodo(currentProject.id, title, priority, description, date, null);
+    loadTodo();
+  });
+
   deleteProject.addEventListener('click', () => {
     if (confirm("Delete this project?")) {
       relationHandler.removeProject(currentProject.id);
@@ -124,7 +144,7 @@ const manipulateDOM = (function () {
   // Create the button for the project
   function createProjectButton(projectData) {
       // Unpack the project object: 
-      const { project, todo, checked, total } = projectData;
+      const { project, todoArray, checked, total } = projectData;
       // Create the button and set the classes
       const button = document.createElement('button');
       button.classList.add('project-button', 'open-project');
@@ -147,17 +167,31 @@ const manipulateDOM = (function () {
       button.append(projectName, projectChecked);
       button.style.backgroundColor = `#${project.color}`;
       button.addEventListener('click', () =>{
-        openProject(project, todo);
+        openProject(project, todoArray);
       });
     return button;
   }
 
+  function createTodoElement(todo) {
+    const div = document.createElement('div');
+    div.classList.add('todo-container');
+    const title = document.createElement('title');
+    title.classList.add('todo-title');
+    title.textContent = todo.title;
+    div.appendChild(title);
+    todoList.insertBefore(div, addContainer);
+  }
+
   // Open a project 
-  function openProject(project, todo) {
+  function openProject(project, todoArray) {
     currentProject = project;
     projectName.value = currentProject.name;
+
+    // Load the todos
+    loadTodo(todoArray);
     // Change the colors to the colors of the project, 
     changeColor();
+
     // Set to display the project name, hide the project list and show the project
     projectList.style.display = 'none';
     listTitle.style.display = 'none';
@@ -182,6 +216,21 @@ const manipulateDOM = (function () {
     listTitle.style.display = 'flex';
     projectContent.style.display = 'none';
     projectTitle.style.display = 'none';
+  }
+
+  // Load the todo items and put them on the page
+  function loadTodo(todoArray=null) {
+    if (!todoArray) {
+      todoArray = relationHandler.getTodoArray(currentProject.id);
+    }
+    Array.from(todoList.children).forEach(child => {
+      if (child !== addContainer) {
+        todoList.removeChild(child);
+      } 
+    });
+    for (const todo in todoArray) {
+      createTodoElement(todo);
+    }
   }
 
   // Change the color of objects in a project

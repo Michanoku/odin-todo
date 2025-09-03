@@ -34,16 +34,16 @@
             <div id="creator-container">
               <form id="add-todo-form">
                 <label class="todo-label" for="title-input">Title</label>
-                <input type="text" id="title-input" class="todo-creator long-input" maxlength="64">
+                <input name="title" type="text" id="title-input" class="todo-creator long-input" maxlength="64" required>
                 <label class="todo-label" for="subtitle-input">Description</label>
-                <textarea id="subtitle-input" class="todo-creator long-input" rows="2" maxlength="128"></textarea>
+                <textarea name="description" id="subtitle-input" class="todo-creator long-input" rows="2" maxlength="128"></textarea>
                 <label class="todo-label" for="date-input">Date Due</label>
-                <input type="date" id="date-input" class="todo-creator">
+                <input name="date" type="date" id="date-input" class="todo-creator">
                 <label class="todo-label" for="priority-input">Priority</label>
-                <select id="priority-input" class="todo-creator">
-                  <option value="low">Low</option>
-                  <option value="normal" selected>Normal</option>
-                  <option value="high">High</option>
+                <select name="priority" id="priority-input" class="todo-creator">
+                  <option value="Low">Low</option>
+                  <option value="Normal" selected>Normal</option>
+                  <option value="High">High</option>
                 </select>
                 <div id="lower-buttons">
                   <button type="submit" id="confirm-button">Add</button> 

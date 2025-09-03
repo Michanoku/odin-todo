@@ -63,8 +63,8 @@ const relationHandler = (function() {
   }
   
   // The function to add a todo calls the todos to create it and adds it to the relations array
-  function addTodo(projectId, title, description, dueDate, priority) {
-    const newTodo = todos.createTodo(title, description, dueDate, priority);
+  function addTodo(projectId, title, priority, description, dueDate, id) {
+    const newTodo = todos.createTodo(title, priority, description, dueDate, id);
     relations[projectId].push(newTodo.id);
     // Save the user data
     storageHandler.saveData();
@@ -120,6 +120,19 @@ const relationHandler = (function() {
     return {project: project, todo: projectTodo, total: total, checked: checked};
   }
 
+  // Reload the todo when the project is already open
+  function getTodoArray(projectId) {
+    const projectRelations = relations[projectId];
+
+    // Create an array of todos of this project
+    const projectTodo = new Array();
+    for (const todoId in projectRelations) {
+      const todo = todos.getTodo(todoId);
+      projectTodo.push(todo);
+    }
+    return projectTodo;
+  };
+
   // This function simply returns the relations as they are
   function getRelations() {
     return relations;
@@ -133,7 +146,7 @@ const relationHandler = (function() {
     }
   }
 
-  return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations }
+  return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations, getTodoArray }
 })();
 
 export { relationHandler, storageHandler }
