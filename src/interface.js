@@ -19,6 +19,7 @@ const manipulateDOM = (function () {
   const back = document.querySelector('#back');
   const colorButtons = document.querySelectorAll('.color-button');
   const addTodo = document.querySelector('#add-todo');
+  const deleteProject = document.querySelector('#delete-project');
 
   // Todo related
   const creatorContainer = document.querySelector('#creator-container');
@@ -56,22 +57,7 @@ const manipulateDOM = (function () {
   });
 
   back.addEventListener('click', () => {
-    // Reload project list before going back (something may have changed)
-    loadInitial();
-
-    // Set background color to default
-    content.style.backgroundColor = defaultBG;
-
-    // Close and reset add form just in case
-    addTodoForm.reset();
-    creatorContainer.style.display = 'none';
-    addTodo.style.display = 'block';
-
-    // Show the list and hide the rest
-    projectList.style.display = 'grid';
-    listTitle.style.display = 'flex';
-    projectContent.style.display = 'none';
-    projectTitle.style.display = 'none';
+    closeProject();
   });
 
   colorButtons.forEach(button => {
@@ -84,6 +70,13 @@ const manipulateDOM = (function () {
   addTodo.addEventListener('click', () => {
     addTodo.style.display = 'none';
     creatorContainer.style.display = 'block';
+  });
+
+  deleteProject.addEventListener('click', () => {
+    if (confirm("Delete this project?")) {
+      relationHandler.removeProject(currentProject.id);
+      closeProject()
+    } 
   });
 
   // Event Handlers for Todo Creator
@@ -170,6 +163,25 @@ const manipulateDOM = (function () {
     listTitle.style.display = 'none';
     projectContent.style.display = 'grid';
     projectTitle.style.display = 'flex';
+  }
+
+  function closeProject() {
+    // Reload project list before going back (something may have changed)
+    loadInitial();
+
+    // Set background color to default
+    content.style.backgroundColor = defaultBG;
+
+    // Close and reset add form just in case
+    addTodoForm.reset();
+    creatorContainer.style.display = 'none';
+    addTodo.style.display = 'block';
+
+    // Show the list and hide the rest
+    projectList.style.display = 'grid';
+    listTitle.style.display = 'flex';
+    projectContent.style.display = 'none';
+    projectTitle.style.display = 'none';
   }
 
   // Change the color of objects in a project

@@ -79,8 +79,7 @@ const relationHandler = (function() {
       todos.deleteTodo(todo);
     };
     // Delete the project from relations
-    const projectIndex = relations.indexOf(project);
-    relations.splice(projectIndex, 1);
+    delete relations[projectId]
     // Delete the project from the projects array
     projects.deleteProject(projectId)
     // Save the user data
