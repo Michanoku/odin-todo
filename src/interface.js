@@ -12,7 +12,7 @@ const manipulateDOM = (function () {
   const addTodo = document.querySelector('#add-todo');
   const back = document.querySelector('#back');
   const colorButtons = document.querySelectorAll('.color-button');
-  const addContainer = document.querySelector('#add-container');
+  const projectName = document.querySelector('#project-name');
   const creatorContainer = document.querySelector('#creator-container');
   const projectId = document.querySelector('#project-id');
   const cancel = document.querySelector('#cancel-button');
@@ -24,11 +24,30 @@ const manipulateDOM = (function () {
 
   // Event handler to add a project button to the content container
   addProject.addEventListener('click', () => {
-    addNewProject("New Project");
+    addNewProject('New Project');
   });
 
   addTodo.addEventListener('click', () => {
     todoCreator();
+  });
+
+  projectName.addEventListener('mouseover', () => {
+    projectName.style.filter =  currentProject.textColor === '#000000' ? 'brightness(70%)' : 'brightness(130%)'
+  });
+
+  projectName.addEventListener('mouseout', () => {
+    projectName.style.filter = `brightness(100%)`;
+  });
+
+  projectName.addEventListener('click', () => {
+    projectName.readOnly = false;
+    projectName.style.border = `1px solid ${currentProject.textColor}`;
+  });
+
+  projectName.addEventListener('blur', () => {
+    projectName.readOnly = true;
+    projectName.style.border = '1px solid transparent';
+    projects.editProjectName(currentProject, projectName.value);
   });
 
   colorButtons.forEach(button => {
@@ -42,11 +61,9 @@ const manipulateDOM = (function () {
   back.addEventListener('click', () => {
     // Reload project list before going back (something may have changed)
     loadInitial();
+
     // Set background color to default
     content.style.backgroundColor = defaultBG;
-
-    // Remove elements that will be added when projects are opened
-    projectTitle.removeChild(projectTitle.firstElementChild);
 
     // Show the list and hide the rest
     projectList.style.display = 'grid';
@@ -130,39 +147,14 @@ const manipulateDOM = (function () {
   // Open a project 
   function openProject(project, todo) {
     currentProject = project;
+    projectName.value = currentProject.name;
     // Change the colors to the colors of the project, 
     changeColor();
-    addInput();
     // Set to display the project name, hide the project list and show the project
     projectList.style.display = 'none';
     listTitle.style.display = 'none';
     projectContent.style.display = 'grid';
     projectTitle.style.display = 'flex';
-  }
-
-  // Add color buttons to a project
-  function addInput() {
-
-    // Create the projectName input to change the name of the project
-    const projectName = document.createElement("input");
-    projectName.className = "text";
-    projectName.type = "text";
-    projectName.value = currentProject.name;
-    projectName.readOnly = true;
-    projectName.id = "project-name";
-    projectName.style.color = currentProject.textColor;
-
-    // Add one EventListener for click and one for blur
-    projectName.addEventListener('click', () => {
-      projectName.readOnly = false;
-      projectName.style.border = `1px solid ${currentProject.textColor}`;
-    });
-    projectName.addEventListener('blur', () => {
-      projectName.readOnly = true;
-      projectName.style.border = 0;
-      projects.editProjectName(currentProject, projectName.value);
-    });
-    projectTitle.insertBefore(projectName, back);
   }
 
   // Create the input to create todos
@@ -178,6 +170,7 @@ const manipulateDOM = (function () {
   // Change the color of objects in a project
   function changeColor() {
     content.style.backgroundColor = currentProject.backgroundColor;
+    projectName.style.backgroundColor = currentProject.backgroundColor;
     const texts = document.querySelectorAll('.text');
     const subtexts = document.querySelectorAll('.subtext');
     texts.forEach(text => {
