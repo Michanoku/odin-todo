@@ -3,34 +3,39 @@ import { projects } from './projects.js';
 
 const manipulateDOM = (function () {
   // Add elements that will be used througout most DOM manipulations
+
+  // Grid related items
   const content = document.querySelector('#content');
   const listTitle = document.querySelector('#list-title');
   const projectList = document.querySelector('#project-list');
   const projectTitle = document.querySelector('#project-title');
   const projectContent = document.querySelector('#project-content');
+
+  // Project list related
   const addProject = document.querySelector('#add-project');
-  const addTodo = document.querySelector('#add-todo');
+
+  // Project related
+  const projectName = document.querySelector('#project-name');
   const back = document.querySelector('#back');
   const colorButtons = document.querySelectorAll('.color-button');
-  const projectName = document.querySelector('#project-name');
+  const addTodo = document.querySelector('#add-todo');
+
+  // Todo related
   const creatorContainer = document.querySelector('#creator-container');
-  const projectId = document.querySelector('#project-id');
-  const cancel = document.querySelector('#cancel-button');
   const addTodoForm = document.querySelector('#add-todo-form');
+  const cancel = document.querySelector('#cancel-button');
+
 
   // Set the default background color
   const defaultBG = '#F4F0BB';
   let currentProject;
 
-  // Event handler to add a project button to the content container
+  // Event Handlers on project list
   addProject.addEventListener('click', () => {
     addNewProject('New Project');
   });
 
-  addTodo.addEventListener('click', () => {
-    todoCreator();
-  });
-
+  // Event Handlers in project content
   projectName.addEventListener('mouseover', () => {
     projectName.style.filter =  currentProject.textColor === '#000000' ? 'brightness(70%)' : 'brightness(130%)'
   });
@@ -50,20 +55,17 @@ const manipulateDOM = (function () {
     projects.editProjectName(currentProject, projectName.value);
   });
 
-  colorButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      projects.editProjectColor(currentProject, button.dataset.color);
-      changeColor();
-    });
-  });
-
-  // Event handler for the button to go back to the project list
   back.addEventListener('click', () => {
     // Reload project list before going back (something may have changed)
     loadInitial();
 
     // Set background color to default
     content.style.backgroundColor = defaultBG;
+
+    // Close and reset add form just in case
+    addTodoForm.reset();
+    creatorContainer.style.display = 'none';
+    addTodo.style.display = 'block';
 
     // Show the list and hide the rest
     projectList.style.display = 'grid';
@@ -72,24 +74,24 @@ const manipulateDOM = (function () {
     projectTitle.style.display = 'none';
   });
 
-  cancel.addEventListener('click', () => {
-    addTodoForm.reset();
-    const addButton = document.querySelector('#add-todo');
-    creatorContainer.style.display = 'none';
-    addButton.style.display = 'block';
+  colorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      projects.editProjectColor(currentProject, button.dataset.color);
+      changeColor();
+    });
   });
 
-  // Add a new project, as opposed to adding an existing project
-  function addNewProject(name) {
-    // Use the relationhandler to create the project with the desired name
-    const project = relationHandler.addProject(name);
+  addTodo.addEventListener('click', () => {
+    addTodo.style.display = 'none';
+    creatorContainer.style.display = 'block';
+  });
 
-    // Create the project button
-    const button = createProjectButton(project);
-
-    // Append the button before the add button, so the add button is always last
-    projectList.insertBefore(button, addProject);
-  }
+  // Event Handlers for Todo Creator
+  cancel.addEventListener('click', () => {
+    addTodoForm.reset();
+    creatorContainer.style.display = 'none';
+    addTodo.style.display = 'block';
+  });
 
   // The function to load the initial content, either existing or new
   function loadInitial() {
@@ -111,6 +113,19 @@ const manipulateDOM = (function () {
       // Append the button before the add button, so the add button is always last
       projectList.insertBefore(button, addProject);
     });
+  }
+
+
+  // Add a new project, as opposed to adding an existing project
+  function addNewProject(name) {
+    // Use the relationhandler to create the project with the desired name
+    const project = relationHandler.addProject(name);
+
+    // Create the project button
+    const button = createProjectButton(project);
+
+    // Append the button before the add button, so the add button is always last
+    projectList.insertBefore(button, addProject);
   }
 
   // Create the button for the project
@@ -157,20 +172,13 @@ const manipulateDOM = (function () {
     projectTitle.style.display = 'flex';
   }
 
-  // Create the input to create todos
-  function todoCreator() {
-    addTodo.style.display = 'none';
-
-    creatorContainer.style.display = 'block';
-    projectId.value = currentProject.id;
-
-    // Add Needed Event Listeners
-  }
-
   // Change the color of objects in a project
   function changeColor() {
+    // Change background color for content and projectname
     content.style.backgroundColor = currentProject.backgroundColor;
     projectName.style.backgroundColor = currentProject.backgroundColor;
+
+    // Get all texts and subtexts and change their color
     const texts = document.querySelectorAll('.text');
     const subtexts = document.querySelectorAll('.subtext');
     texts.forEach(text => {
@@ -181,7 +189,6 @@ const manipulateDOM = (function () {
       subtext.style.filter = `brightness(${currentProject.subtextBrightness})`;
     });
   }
-
 
   return { loadInitial };
 })();
