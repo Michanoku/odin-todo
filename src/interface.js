@@ -1,5 +1,6 @@
 import { relationHandler, storageHandler } from './handler.js'; 
 import { projects } from './projects.js';
+import { todos } from './todos.js';
 
 const manipulateDOM = (function () {
   // Add elements that will be used througout most DOM manipulations
@@ -98,6 +99,7 @@ const manipulateDOM = (function () {
     }
     relationHandler.addTodo(currentProject.id, title, priority, description, date, false, null);
     loadTodo();
+    changeColor();
     closeAddTodo();
   });
 
@@ -172,13 +174,47 @@ const manipulateDOM = (function () {
   }
 
   function createTodoElement(todo) {
-    const div = document.createElement('div');
-    div.classList.add('todo-container');
+
+    // Create the elements and add classes and attributes
+    const container = document.createElement('div');
+    container.classList.add('todo-container');
+    container.dataset.expanded = 'false';
+    const flexRow = document.createElement('div');
+    flexRow.classList.add('todo-flex-row', 'text');
+    const checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    const flexColumn = document.createElement('div');
+    flexColumn.classList.add('todo-flex-column');
     const title = document.createElement('div');
-    title.classList.add('todo-title');
+    title.classList.add('todo-title', 'text');
+    const dueDate = document.createElement('div');
+    dueDate.classList.add('todo-date', 'subtext');
+    const description = document.createElement('div');
+    description.classList.add('todo-description', 'text');
+
+    // Add data
     title.textContent = todo.title;
-    div.appendChild(title);
-    todoList.insertBefore(div, addContainer);
+    checkbox.checked = todo.checked;
+    checkbox.dataset.priority = todo.priority;
+    dueDate.textContent = todo.dueDate ? `Due: ${todo.dueDate}` : 'Due: No date';
+    description.textContent = todo.description;
+
+    // Add Listeners
+    checkbox.addEventListener('change', () => {
+      todos.toggleTodo(todo, checkbox.checked)
+    });
+
+    flexColumn.addEventListener('click', () => {
+      const expanded = container.dataset.expanded === 'true';
+      container.style.maxHeight = expanded ? '3rem' : '600rem';
+      container.dataset.expanded = expanded ? 'false' : 'true';
+    });
+
+    // Append the elements
+    flexColumn.append(title, dueDate);
+    flexRow.append(checkbox, flexColumn);
+    container.append(flexRow, description);
+    todoList.insertBefore(container, addContainer);
   }
 
   // Open a project 

@@ -1,5 +1,4 @@
 :root {
-  font-size: 16px;
   --accent-color: #38618C;
   --accent-color-muted: #2c4c6e;
   --default-project-background: #f5f5f5;
@@ -7,13 +6,19 @@
   --fixed-text: #000000;
   --fixed-text-muted: #1e1e1e;
   --neutral-text: #777777;
+  --priority-low: #79B990;
+  --priority-normal: #EFE9F4;
+  --priority-high: #EF6B79;
+  font-size: 16px;
   color: var(--fixed-text);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: inherit;
 }
 
 input {
@@ -21,6 +26,42 @@ input {
   outline: none;
   background: transparent;
   font: inherit;
+}
+
+input[type="checkbox"] {
+  appearance: none;            
+  -webkit-appearance: none; 
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"][data-priority="Normal"] {
+  background-color: var(--priority-normal);
+}
+
+input[type="checkbox"][data-priority="Low"] {
+  background-color: var(--priority-low);
+}
+
+input[type="checkbox"][data-priority="High"] {
+  background-color: var(--priority-high);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 0.1rem;
+  width: 0.4rem;
+  height: 0.8rem;
+  border: solid var(--fixed-text);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 /* General site layout */
@@ -70,7 +111,7 @@ input {
   justify-content: start;
   flex-wrap: nowrap;
   gap: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.875rem;
 }
 
 #project-list {
@@ -107,7 +148,7 @@ input {
 .project-name {
   grid-area: name;
   text-align: start;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 
 .project-checked {
@@ -131,7 +172,7 @@ input {
   display: none;
   align-items: center;
   justify-content: space-between;
-  font-size: 2rem;
+  font-size: 1.875rem;
 }
 
 #project-name {
@@ -208,10 +249,54 @@ input {
   background-color: #19180A; 
 }
 
+/* The list of actual todos */
 #todo-list {
   grid-area: todo-list;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+}
+
+.todo-container {
+  max-height: 3rem; 
+  overflow: hidden;
+}
+
+.todo-flex-row {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.todo-flex-column {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.todo-title {
+  font-size: 1.25rem;
+  white-space: normal;
+  word-wrap: break-word;
+  font-weight: 500;
+}
+
+.todo-date {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.todo-description {
+  font-size: 1.125rem;
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 0rem 3rem; 
+}
+
+.todo-container:has(input[type="checkbox"]:checked) {
+  text-decoration: line-through;
 }
 
 /* Adding a todo */ 
@@ -223,6 +308,7 @@ input {
 }
 
 #creator-container {
+  display: none;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--content-background);
@@ -251,7 +337,7 @@ input {
 }
 
 .todo-creator {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   color: var(--fixed-text);
   background-color: var(--default-project-background);
   border: 1px solid var(--fixed-text);
@@ -264,15 +350,11 @@ input {
   width: 100%;
 }
 
-#creator-container {
- display: none;
-}
-
 #confirm-button {
   background-color: var(--accent-color);
   color: var(--default-project-background);
   border: 1px solid var(--default-project-background);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   padding: 1rem 2rem;
   border-radius: 5px;
   overflow: hidden;
@@ -287,7 +369,7 @@ input {
   background-color: var(--fixed-text);
   color: var(--default-project-background);
   border: 1px solid var(--default-project-background);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   padding: 1rem 2rem;
   border-radius: 5px;
   overflow: hidden;
@@ -316,7 +398,7 @@ input {
   background-color: var(--fixed-text);
   color: var(--default-project-background);
   border: 1px solid var(--default-project-background);
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding: 0.5rem;
   margin: 0.5rem;
   border-radius: 5px;

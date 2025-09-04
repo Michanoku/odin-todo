@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { constructFromSymbol } from "date-fns/constants";
+import { storageHandler } from "./handler";
 
 const todos = (function () {
 
@@ -18,10 +18,9 @@ const todos = (function () {
       this.title = title;
       this.priority = priority;
       this.description = description;
-      this.dueDate = dueDate ? null : format(new Date(dueDate), "yyyy-MM-dd");
+      this.dueDate = dueDate ? format(new Date(dueDate), "yyyy-MM-dd") : null;
       this.checked = checked;
       this.id = id ?? crypto.randomUUID();
-
     }
   }
 
@@ -66,10 +65,9 @@ const todos = (function () {
   }
 
   // Toggle the check status of the todo
-  function toggleTodo(todoId) {
-    const todo = getTodo(todoId);
-    todo.checked = !todo.checked;
-    return todo.checked;
+  function toggleTodo(todo, checked) {
+    todo.checked = checked;
+    storageHandler.saveData();
   }
 
   return { createTodo, deleteTodo, toggleTodo, getTodo, getAllTodo, setTodo };
