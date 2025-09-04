@@ -74,6 +74,14 @@ const manipulateDOM = (function () {
     creatorContainer.style.display = 'block';
   });
 
+  deleteProject.addEventListener('click', () => {
+    if (confirm("Delete this project?")) {
+      relationHandler.removeProject(currentProject.id);
+      closeProject()
+    } 
+  });
+
+  // Event Handlers for Todo Creator
   addTodoForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const todoData = new FormData(addTodoForm);
@@ -88,22 +96,13 @@ const manipulateDOM = (function () {
       alert('Please set the priority for your todo item.');
       return;
     }
-    relationHandler.addTodo(currentProject.id, title, priority, description, date, null);
+    relationHandler.addTodo(currentProject.id, title, priority, description, date, false, null);
     loadTodo();
+    closeAddTodo();
   });
 
-  deleteProject.addEventListener('click', () => {
-    if (confirm("Delete this project?")) {
-      relationHandler.removeProject(currentProject.id);
-      closeProject()
-    } 
-  });
-
-  // Event Handlers for Todo Creator
   cancel.addEventListener('click', () => {
-    addTodoForm.reset();
-    creatorContainer.style.display = 'none';
-    addTodo.style.display = 'block';
+    closeAddTodo();
   });
 
   // The function to load the initial content, either existing or new
@@ -175,7 +174,7 @@ const manipulateDOM = (function () {
   function createTodoElement(todo) {
     const div = document.createElement('div');
     div.classList.add('todo-container');
-    const title = document.createElement('title');
+    const title = document.createElement('div');
     title.classList.add('todo-title');
     title.textContent = todo.title;
     div.appendChild(title);
@@ -228,9 +227,15 @@ const manipulateDOM = (function () {
         todoList.removeChild(child);
       } 
     });
-    for (const todo in todoArray) {
+    todoArray.forEach(todo => {
       createTodoElement(todo);
-    }
+    });
+  }
+
+  function closeAddTodo() {
+    addTodoForm.reset();
+    creatorContainer.style.display = 'none';
+    addTodo.style.display = 'block';
   }
 
   // Change the color of objects in a project

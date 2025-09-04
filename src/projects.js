@@ -68,9 +68,9 @@ const projects = (function () {
   // Set all projects by creating them from data
   function setProjects(storedArray) {
     projectsArray = new Array();
-    for (const project in storedArray) {
-      createProject(storedArray[project].name, storedArray[project]._backgroundColor, storedArray[project].id);
-    }
+    storedArray.forEach(project => {
+      createProject(project.name, project._backgroundColor, project.id);
+    });
   }
 
   // Get a specific project by its ID

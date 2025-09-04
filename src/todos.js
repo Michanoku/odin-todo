@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { constructFromSymbol } from "date-fns/constants";
 
 const todos = (function () {
 
@@ -11,26 +12,24 @@ const todos = (function () {
       priority,
       description,
       dueDate,
+      checked,
       id,
     ) {
       this.title = title;
       this.priority = priority;
       this.description = description;
       this.dueDate = dueDate ? null : format(new Date(dueDate), "yyyy-MM-dd");
+      this.checked = checked;
       this.id = id ?? crypto.randomUUID();
-      this._checked = false;
-    }
-    get checked() {
-      return this._checked;
-    }
-    set checked(value) {
-      this._checked = value;
+
     }
   }
 
   // Create a todo from the data input
-  function createTodo(title, priority, description, dueDate, id) {
-    const todo = new Todo(title, priority, description, dueDate, id);
+  function createTodo(title, priority, description, dueDate, checked, id) {
+    console.log(dueDate)
+    const todo = new Todo(title, priority, description, dueDate, checked, id);
+    todoArray.push(todo);
     return todo;
   };
 
@@ -48,20 +47,22 @@ const todos = (function () {
   // Set all todos from data
   function setTodo(storedTodo) {
     todoArray = new Array();
-    for (const todo in storedTodo) {
+    storedTodo.forEach(todo => {
       createTodo(
-        storedTodo[todo].title, 
-        storedTodo[todo].description, 
-        storedTodo[todo].dueDate, 
-        storedTodo[todo].priority, 
-        storedTodo[todo].id,
+        todo.title, 
+        todo.priority, 
+        todo.description, 
+        todo.dueDate, 
+        todo.checked,
+        todo.id,
       );
-    }
+    })
   }
 
   // Get a single todo
   function getTodo(todoId) {
-    return todoArray.find((todo) => todo.id === todoId);
+    const todo = todoArray.find((todo) => todo.id === todoId);
+    return todo
   }
 
   // Toggle the check status of the todo

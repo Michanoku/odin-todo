@@ -19,7 +19,6 @@ const storageHandler = (function () {
     }
     // Load the current relations and create an array of projects to load initially
     const initialRelations = relationHandler.getRelations();
-    console.log(initialRelations)
     const initialProjects = new Array();
     for (const projectId in initialRelations) {
       initialProjects.push(relationHandler.getProject(projectId));
@@ -64,8 +63,8 @@ const relationHandler = (function() {
   }
   
   // The function to add a todo calls the todos to create it and adds it to the relations array
-  function addTodo(projectId, title, priority, description, dueDate, id) {
-    const newTodo = todos.createTodo(title, priority, description, dueDate, id);
+  function addTodo(projectId, title, priority, description, dueDate, checked, id) {
+    const newTodo = todos.createTodo(title, priority, description, dueDate, checked, id);
     relations[projectId].push(newTodo.id);
     // Save the user data
     storageHandler.saveData();
@@ -76,9 +75,9 @@ const relationHandler = (function() {
   function removeProject(projectId) {
     // Check the relations array for todos and delete all of them
     const project = relations[projectId];
-    for (const todo in project) {
+    project.forEach(todo => {
       todos.deleteTodo(todo);
-    };
+    })
     // Delete the project from relations
     delete relations[projectId]
     // Delete the project from the projects array
@@ -105,15 +104,12 @@ const relationHandler = (function() {
     // Get the project and the relations via the id
     const project = projects.getProject(projectId);
     const projectRelations = relations[projectId];
-
     // Create an array of todos of this project
     const projectTodo = new Array();
-    for (const todoId in projectRelations) {
+    for (const todoId of projectRelations) {
       const todo = todos.getTodo(todoId);
       projectTodo.push(todo);
     };
-    console.log(projectRelations)
-    console.log(projectTodo);
     // Check how many todos exist and how many are checked
     const total = projectTodo.length;
     const checked = projectTodo.filter(todo => todo.checked).length;
@@ -125,10 +121,9 @@ const relationHandler = (function() {
   // Reload the todo when the project is already open
   function getTodoArray(projectId) {
     const projectRelations = relations[projectId];
-
     // Create an array of todos of this project
     const projectTodo = new Array();
-    for (const todoId in projectRelations) {
+    for (const todoId of projectRelations) {
       const todo = todos.getTodo(todoId);
       projectTodo.push(todo);
     }
