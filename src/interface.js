@@ -222,8 +222,10 @@ const manipulateDOM = (function () {
     descriptionInput.maxLength = 256;
     descriptionInput.value = todo.description;
 
+    const confirmEditContainer = document.createElement('div');
+    confirmEditContainer.classList.add('confirm-edit-container');
     const confirmEdit = document.createElement('button');
-    confirmEdit.classList.add('todo-button', 'todo-edit-button');
+    confirmEdit.classList.add('todo-button', 'todo-edit-button', 'confirm-edit');
     confirmEdit.textContent = 'Save';
 
     // Add data
@@ -268,44 +270,51 @@ const manipulateDOM = (function () {
     editTitle.addEventListener('click', () => {
       buttonContainer.style.display = 'none';
       titleInput.style.display = 'block';
-      confirmEdit.style.display = 'block';
+      confirmEditContainer.style.display = 'flex';
       confirmEdit.dataset.edit = 'title';
+      titleInput.focus();
     });
 
     editDescription.addEventListener('click', () => {
       buttonContainer.style.display = 'none';
       descriptionInput.style.display = 'block';
-      confirmEdit.style.display = 'block';
+      confirmEditContainer.style.display = 'flex';
       confirmEdit.dataset.edit = 'description';
+      descriptionInput.focus();
     });
 
     confirmEdit.addEventListener('click', () => {
       if (confirmEdit.dataset.edit === 'title') {
-        todos.editTitle(todo, titleInput.value);
-        title.textContent = todo.title;
-        titleInput.style.display = 'none';
+        if (!titleInput.value) {
+          alert('Please set a title for your todo item.');
+        } else {
+          todos.editTitle(todo, titleInput.value);
+          title.textContent = todo.title;
+          titleInput.style.display = 'none';
+        }
       } else {
         todos.editDescription(todo, descriptionInput.value);
         description.textContent = todo.description;
         descriptionInput.style.display = 'none';
       }
-      confirmEdit.style.display = 'none';
+      confirmEditContainer.style.display = 'none';
       buttonContainer.style.display = 'flex';
     });
 
-      deleteTodo.addEventListener('click', () => {
-        if (confirm("Delete this todo?")) {
-          relationHandler.removeTodo(currentProject.id, todo.id);
-          loadTodo();
-          changeColor();
-        } 
-      });
+    deleteTodo.addEventListener('click', () => {
+      if (confirm("Delete this todo?")) {
+        relationHandler.removeTodo(currentProject.id, todo.id);
+        loadTodo();
+        changeColor();
+      } 
+    });
 
     // Append the elements
     flexColumn.append(title, dueDate);
     flexRow.append(checkbox, flexColumn);
     buttonContainer.append(editPriority, editDate, editTitle, editDescription, deleteTodo);
-    container.append(flexRow, description, buttonContainer);
+    confirmEditContainer.appendChild(confirmEdit);
+    container.append(flexRow, description, titleInput, descriptionInput, confirmEditContainer, buttonContainer);
     todoList.insertBefore(container, addContainer);
   }
 

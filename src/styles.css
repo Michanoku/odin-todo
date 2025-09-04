@@ -341,7 +341,13 @@ input[type="checkbox"]:checked::after {
 }
 
 .edit-title-input, .edit-description-input {
+  margin: 1rem 3rem;
   display: none;
+}
+
+.confirm-edit-container {
+  display: none;
+  justify-content: center;
 }
 
 .todo-container:has(input[type="checkbox"]:checked) {
