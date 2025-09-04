@@ -70,7 +70,27 @@ const todos = (function () {
     storageHandler.saveData();
   }
 
-  return { createTodo, deleteTodo, toggleTodo, getTodo, getAllTodo, setTodo };
+  function editPriority(todo, priority) {
+    todo.priority = priority;
+    storageHandler.saveData();
+  }
+
+  function editDate(todo, date) {
+    todo.dueDate = date;
+    storageHandler.saveData();
+  }
+
+  function editTitle(todo, title) {
+    todo.title = title;
+    storageHandler.saveData();
+  }
+
+  function editDescription(todo, description) {
+    todo.description = description;
+    storageHandler.saveData();
+  }
+
+  return { createTodo, deleteTodo, toggleTodo, getTodo, getAllTodo, setTodo, editPriority, editDate, editTitle, editDescription };
 }());
   
 export { todos }

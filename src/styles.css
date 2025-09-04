@@ -295,6 +295,55 @@ input[type="checkbox"]:checked::after {
   padding: 0rem 3rem; 
 }
 
+.todo-button-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.todo-edit-input {
+  font-size: 1.125rem;
+  color: var(--fixed-text);
+  background-color: var(--default-project-background);
+  border: 1px solid var(--fixed-text);
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+}
+
+.todo-button {
+  font-size: 1.125rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.todo-edit-button {
+  background-color: var(--accent-color);
+  color: var(--default-project-background);
+  border: 1px solid var(--default-project-background);
+}
+
+.todo-edit-button:hover {
+  background-color: var(--accent-color-muted);
+}
+
+.todo-delete-button {
+  background-color: var(--fixed-text);
+  color: var(--default-project-background);
+  border: 1px solid var(--default-project-background);
+}
+
+.todo-delete-button:hover {
+  background-color: var(--fixed-text-muted);
+}
+
+.edit-title-input, .edit-description-input {
+  display: none;
+}
+
 .todo-container:has(input[type="checkbox"]:checked) {
   text-decoration: line-through;
 }
