@@ -29,7 +29,6 @@ const manipulateDOM = (function () {
   const addTodoForm = document.querySelector('#add-todo-form');
   const cancel = document.querySelector('#cancel-button');
 
-
   // Set the default background color
   const defaultBG = '#F4F0BB';
   let currentProject;
@@ -76,7 +75,7 @@ const manipulateDOM = (function () {
   });
 
   deleteProject.addEventListener('click', () => {
-    if (confirm("Delete this project?")) {
+    if (confirm('Delete this project?')) {
       relationHandler.removeProject(currentProject.id);
       closeProject()
     } 
@@ -86,10 +85,10 @@ const manipulateDOM = (function () {
   addTodoForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const todoData = new FormData(addTodoForm);
-    const title = todoData.get("title") || null;
-    const priority = todoData.get("priority") || null;
-    const description = todoData.get("description") || null;
-    const date = todoData.get("date") || null;
+    const title = todoData.get('title') || null;
+    const priority = todoData.get('priority') || null;
+    const description = todoData.get('description') || null;
+    const date = todoData.get('date') || null;
     if (!title) {
       alert('Please set a title for your todo item.');
       return;
@@ -210,13 +209,13 @@ const manipulateDOM = (function () {
     deleteTodo.classList.add('todo-button', 'todo-delete-button');
     deleteTodo.textContent = 'Delete Todo';
 
-    const titleInput = document.createElement("input");
+    const titleInput = document.createElement('input');
     titleInput.classList.add('todo-creator', 'long-input', 'edit-title-input');
-    titleInput.type = "text";
+    titleInput.type = 'text';
     titleInput.maxLength = 64;
     titleInput.value = todo.title;
 
-    const descriptionInput = document.createElement("textarea");
+    const descriptionInput = document.createElement('textarea');
     descriptionInput.classList.add('todo-creator', 'long-input', 'edit-description-input');
     descriptionInput.rows = 2;
     descriptionInput.maxLength = 256;
@@ -235,7 +234,7 @@ const manipulateDOM = (function () {
     dueDate.textContent = todo.dueDate ? `Due: ${todo.dueDate}` : 'Due: No date';
     description.textContent = todo.description;
     editDate.value = todo.dueDate;
-    const options = ["Low", "Normal", "High"];
+    const options = ['Low', 'Normal', 'High'];
     options.forEach(option => {
       const temp = document.createElement('option');
       temp.value = option;
@@ -302,7 +301,7 @@ const manipulateDOM = (function () {
     });
 
     deleteTodo.addEventListener('click', () => {
-      if (confirm("Delete this todo?")) {
+      if (confirm('Delete this todo?')) {
         relationHandler.removeTodo(currentProject.id, todo.id);
         loadTodo();
         changeColor();

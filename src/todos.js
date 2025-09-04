@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { storageHandler } from "./handler";
+import { format } from 'date-fns';
+import { storageHandler } from './handler';
 
 const todos = (function () {
 
@@ -18,7 +18,7 @@ const todos = (function () {
       this.title = title;
       this.priority = priority;
       this.description = description;
-      this.dueDate = dueDate ? format(new Date(dueDate), "yyyy-MM-dd") : null;
+      this.dueDate = dueDate ? format(new Date(dueDate), 'yyyy-MM-dd') : null;
       this.checked = checked;
       this.id = id ?? crypto.randomUUID();
     }

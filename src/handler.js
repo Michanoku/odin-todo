@@ -6,9 +6,9 @@ const storageHandler = (function () {
 
   // Load the data upon page load, either create new data or load old data
   function loadInitial() {
-    if (!localStorage.getItem("projects")) {
+    if (!localStorage.getItem('projects')) {
       // If no data exists, create default project and save
-      relationHandler.addProject("Default");
+      relationHandler.addProject('Default');
       saveData();
     } else {
       // Load user data and populate arrays based on user data
