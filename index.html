@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+  <div id="container">
+    <div id="titlebar">
+      <div id="title">Odin Todo</div>
+    </div>
+    <div id="content">
+      <div id="list-title">Projects</div>
+      <div id="project-list">
+        <button id="add-project" class="project-button">+</button>
+      </div>
+      <div id="project-title">
+        <input type="text" value="" id="project-name" readonly="readonly" class="text"></input>
+        <button type="button" id="back" class="text">✖</button>
+      </div>
+      <div id="project-content" class="text">
+        <div id="color-button-container">
+          <button type="submit" form="color-form" class="color-button" data-color="#f5f5f5"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#FF9505"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#35CE8D"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#19180A"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#6A0136"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#38618C"></button>
+          <button type="submit" form="color-form" class="color-button" data-color="#EC4E20"></button>
+        </div>
+        <div id="todo-list">
+          <div id="add-container">
+            <div id="creator-container">
+              <form id="add-todo-form" method="post">
+                <label class="todo-label" for="title-input">Title</label>
+                <input name="title" type="text" id="title-input" class="todo-creator long-input" maxlength="64" required>
+                <label class="todo-label" for="subtitle-input">Description</label>
+                <textarea name="description" id="subtitle-input" class="todo-creator long-input" rows="2" maxlength="256"></textarea>
+                <label class="todo-label" for="date-input">Date Due</label>
+                <input name="date" type="date" id="date-input" class="todo-creator">
+                <label class="todo-label" for="priority-input">Priority</label>
+                <select name="priority" id="priority-input" class="todo-creator">
+                  <option value="Low">Low</option>
+                  <option value="Normal" selected>Normal</option>
+                  <option value="High">High</option>
+                </select>
+                <div id="lower-buttons">
+                  <button type="submit" id="confirm-button">Add</button> 
+                  <button type="button" id="cancel-button">Cancel</button>
+                </div>
+              </form>
+            </div>
+            <button id="add-todo">+</button>
+          </div>
+        </div>
+        <div id="delete-button-container">
+          <button id="delete-project">Delete Project</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script href="index.js"></script>
+</body>
+</html>
