@@ -369,6 +369,7 @@ input[type="checkbox"]:checked::after {
 
 #creator-container {
   display: none;
+  min-width: 80%;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--content-background);
@@ -440,7 +441,6 @@ input[type="checkbox"]:checked::after {
   background-color: var(--fixed-text-muted);
 }
 
-/* Other elements on the project page*/
 #lower-buttons {
   display: flex;
   align-items: center;
@@ -448,6 +448,7 @@ input[type="checkbox"]:checked::after {
   gap: 0.5rem;
 } 
 
+/* Other elements on the project page*/
 #delete-button-container {
   grid-area: delete-button;
   display: flex;
