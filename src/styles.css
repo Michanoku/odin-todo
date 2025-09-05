@@ -369,7 +369,7 @@ input[type="checkbox"]:checked::after {
 
 #creator-container {
   display: none;
-  min-width: 80%;
+  min-width: 70%;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--content-background);
