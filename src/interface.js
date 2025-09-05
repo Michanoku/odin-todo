@@ -91,7 +91,7 @@ const manipulateDOM = (function () {
   // Event Handlers for Todo Creator
   addTodoForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    
+
     // Get all form data first
     const todoData = new FormData(addTodoForm);
     const title = todoData.get('title') || null;
@@ -263,13 +263,13 @@ const manipulateDOM = (function () {
 
     // Hidden input fields that will be shown when the edit buttons are pushed
     const titleInput = document.createElement('input');
-    titleInput.classList.add('todo-creator', 'long-input', 'edit-title-input');
+    titleInput.classList.add('todo-creator', 'edit-input', 'edit-title-input');
     titleInput.type = 'text';
     titleInput.maxLength = 64;
     titleInput.value = todo.title;
 
     const descriptionInput = document.createElement('textarea');
-    descriptionInput.classList.add('todo-creator', 'long-input', 'edit-description-input');
+    descriptionInput.classList.add('todo-creator', 'edit-input', 'edit-description-input');
     descriptionInput.rows = 2;
     descriptionInput.maxLength = 256;
     descriptionInput.value = todo.description;

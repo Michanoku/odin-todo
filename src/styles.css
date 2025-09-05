@@ -346,6 +346,10 @@ input[type="checkbox"]:checked::after {
   display: none;
 }
 
+.edit-input {
+  width: 80%;
+}
+
 .confirm-edit-container {
   display: none;
   justify-content: center;
