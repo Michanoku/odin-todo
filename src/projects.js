@@ -41,7 +41,7 @@ const projects = (function () {
       return this._backgroundType === 'light' ? '#000000' : '#f5f5f5';
     }
 
-    // If the background is light, darken it, if its dark, brighten it (to use for hover)
+    // If the background is light, darken it, if its dark, brighten it
     get subtextBrightness() {
       return this._backgroundType === 'light' ? '50%' : '400%';
     }
@@ -56,7 +56,9 @@ const projects = (function () {
 
   // Delete a project from the array
   function deleteProject(projectId) {
-    const projectIndex = projectsArray.findIndex((project) => project.id === projectId);
+    const projectIndex = projectsArray.findIndex(
+      (project) => project.id === projectId
+    );
     projectsArray.splice(projectIndex, 1);
   }
 
@@ -84,13 +86,21 @@ const projects = (function () {
     storageHandler.saveData();
   };
 
-  // Edit the color of the project (This is used when the project has already previously been received)
+  // Edit the color of the project
   function editProjectColor(project, color) {
     project.backgroundColor = color;
     storageHandler.saveData();
   }
 
-  return { createProject, deleteProject, getAllProjects, setProjects, getProject, editProjectName, editProjectColor };
+  return { 
+    createProject, 
+    deleteProject, 
+    getAllProjects, 
+    setProjects, 
+    getProject, 
+    editProjectName, 
+    editProjectColor 
+  };
 })();
 
 export { projects }

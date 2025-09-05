@@ -288,6 +288,7 @@ input[type="checkbox"]:checked::after {
   font-weight: 400;
 }
 
+/* Items within todos */
 .todo-description {
   font-size: 1.125rem;
   white-space: normal;
@@ -435,6 +436,7 @@ input[type="checkbox"]:checked::after {
   background-color: var(--fixed-text-muted);
 }
 
+/* Other elements on the project page*/
 #lower-buttons {
   display: flex;
   align-items: center;

@@ -17,7 +17,7 @@ const storageHandler = (function () {
       todos.setTodo(data.todo);
       relationHandler.setRelations(data.relations);
     }
-    // Load the current relations and create an array of projects to load initially
+    // Load the current relations and create an array of projects to load
     const initialRelations = relationHandler.getRelations();
     const initialProjects = new Array();
     for (const projectId in initialRelations) {
@@ -26,11 +26,14 @@ const storageHandler = (function () {
     return initialProjects;
   }
 
-  // This function saves the user data to the localstorage. Call it whenever a change is made.
+  // This function saves the user data to the localstorage. 
   function saveData() {
     localStorage.setItem('projects', JSON.stringify(projects.getAllProjects()));
     localStorage.setItem('todo', JSON.stringify(todos.getAllTodo()));
-    localStorage.setItem('relations', JSON.stringify(relationHandler.getRelations()));
+    localStorage.setItem(
+      'relations', 
+      JSON.stringify(relationHandler.getRelations())
+    );
   }
 
   // This function loads the user data. This happens on page load
@@ -52,7 +55,7 @@ const relationHandler = (function() {
   // Initiate the relations object that stores the relations
   let relations = new Object();
 
-  // The function to add a project calls projects to create it and adds it to the relations array
+  // Calls projects to create a project and adds it to the relations array
   function addProject(name) {
     const newProject = projects.createProject(name);
     relations[newProject.id] = new Array();
@@ -62,16 +65,31 @@ const relationHandler = (function() {
     return {project: newProject, todo: new Array(), total: 0, checked: 0};
   }
   
-  // The function to add a todo calls the todos to create it and adds it to the relations array
-  function addTodo(projectId, title, priority, description, dueDate, checked, id) {
-    const newTodo = todos.createTodo(title, priority, description, dueDate, checked, id);
+  // Add a todo calls the todos to create it and adds it to the relations array
+  function addTodo(
+    projectId, 
+    title, 
+    priority, 
+    description, 
+    dueDate, 
+    checked, 
+    id
+  ) {
+    const newTodo = todos.createTodo(
+      title, 
+      priority, 
+      description, 
+      dueDate, 
+      checked, 
+      id
+    );
     relations[projectId].push(newTodo.id);
     // Save the user data
     storageHandler.saveData();
     return newTodo;
   };
 
-  // The function to remove a project. 
+  // Remove a project. 
   function removeProject(projectId) {
     // Check the relations array for todos and delete all of them
     const project = relations[projectId];
@@ -86,10 +104,11 @@ const relationHandler = (function() {
     storageHandler.saveData();
   }
   
-  // The function to remove a Todo
+  // Remove a Todo
   function removeTodo(projectId, todoId) {
-    // Get the project from the project array, and erase the todo from the project todo array
+    // Get the project from the project array
     const project = relations[projectId];
+    // Erase the todo from the project todo array
     const todoIndex = project.findIndex((todo) => todo.id === todoId);
     project.splice(todoIndex, 1);
 
@@ -99,7 +118,7 @@ const relationHandler = (function() {
     storageHandler.saveData();
   };
 
-  // The function to return data from a project
+  // Return data from a project
   function getProject(projectId) {
     // Get the project and the relations via the id
     const project = projects.getProject(projectId);
@@ -115,7 +134,12 @@ const relationHandler = (function() {
     const checked = projectTodo.filter(todo => todo.checked).length;
 
     // Return the project, the todo list and total and checked todo amounts
-    return {project: project, todoArray: projectTodo, total: total, checked: checked};
+    return {
+      project: project, 
+      todoArray: projectTodo, 
+      total: total, 
+      checked: checked
+    };
   }
 
   // Reload the todo when the project is already open
@@ -143,7 +167,16 @@ const relationHandler = (function() {
     }
   }
 
-  return { addProject, addTodo, removeProject, removeTodo, getProject, getRelations, setRelations, getTodoArray }
+  return { 
+    addProject, 
+    addTodo, 
+    removeProject, 
+    removeTodo, 
+    getProject, 
+    getRelations, 
+    setRelations, 
+    getTodoArray 
+  }
 })();
 
 export { relationHandler, storageHandler }

@@ -26,7 +26,6 @@ const todos = (function () {
 
   // Create a todo from the data input
   function createTodo(title, priority, description, dueDate, checked, id) {
-    console.log(dueDate)
     const todo = new Todo(title, priority, description, dueDate, checked, id);
     todoArray.push(todo);
     return todo;
@@ -45,7 +44,10 @@ const todos = (function () {
 
   // Set all todos from data
   function setTodo(storedTodo) {
+    // Reset the array first
     todoArray = new Array();
+
+    // Create each todo
     storedTodo.forEach(todo => {
       createTodo(
         todo.title, 
@@ -70,27 +72,42 @@ const todos = (function () {
     storageHandler.saveData();
   }
 
+  // Edit the priority of the todo
   function editPriority(todo, priority) {
     todo.priority = priority;
     storageHandler.saveData();
   }
 
+  // Edit the date of the todo
   function editDate(todo, date) {
     todo.dueDate = date;
     storageHandler.saveData();
   }
 
+  // Edit the title of the todo
   function editTitle(todo, title) {
     todo.title = title;
     storageHandler.saveData();
   }
 
+  // Edit the description of the todo
   function editDescription(todo, description) {
     todo.description = description;
     storageHandler.saveData();
   }
 
-  return { createTodo, deleteTodo, toggleTodo, getTodo, getAllTodo, setTodo, editPriority, editDate, editTitle, editDescription };
+  return { 
+    createTodo, 
+    deleteTodo, 
+    toggleTodo, 
+    getTodo, 
+    getAllTodo, 
+    setTodo, 
+    editPriority, 
+    editDate, 
+    editTitle, 
+    editDescription 
+  };
 }());
   
 export { todos }
