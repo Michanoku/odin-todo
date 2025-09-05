@@ -5,7 +5,7 @@ The Odin Project Todo List
 ---
 
 ## Live Demo
-[Click here to play](https://michanoku.github.io/odin-todo) 
+[Click here](https://michanoku.github.io/odin-todo) 
 
 ---
 
